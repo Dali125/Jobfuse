@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jobfuse/ui/payments_page/payments_home.dart';
+import 'package:jobfuse/ui/settings/settings_home.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'package:shimmer_animation/shimmer_animation.dart';
@@ -109,9 +110,15 @@ class MyDrawer extends StatelessWidget {
               },
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+          InkWell(
+            child: ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+            ),
+            onTap: (){
+
+              Navigator.push(context, PageTransition(child: SettingsHome(), type: PageTransitionType.fade));
+            },
           ),
 
           ListTile(leading: Icon(Icons.logout_outlined),title: Text('Logout',style: TextStyle(color: Color(

@@ -44,10 +44,9 @@ class _MyProfileState extends State<MyProfile> {
             collapsedHeight: 60,
             stretch: true,
             shadowColor: AppColors.splashColor2,
-            expandedHeight: 100,
+            expandedHeight: 60,
             elevation: 8,
             scrolledUnderElevation: 8,
-            flexibleSpace: FadeInDown(child: Center(child: Text('My Profile',style: TextStyle(fontSize: 30,),),)),
 
 
           ),SliverToBoxAdapter(
@@ -69,75 +68,112 @@ class _MyProfileState extends State<MyProfile> {
 
                             var data = snapshot.data!.docs[index];
 
-                            return Column(
+                            return Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
 
-                              children:  [
 
-                                ClipOval(
-                                  child: SizedBox.fromSize(
-                                    size: Size.fromRadius(70),
 
-                                    child: FadeInUp(
-                                      delay: Duration(milliseconds: 200),
-                                      child: CachedNetworkImage( 
-                                        imageUrl: data['imageUrl'],
-                                        progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                            CircularProgressIndicator(value: downloadProgress.progress),
-                                        errorWidget: (context, url, error) => Icon(Icons.error),
+                                children: [
+
+                                  Text('Profile', style: TextStyle(
+                                    fontSize: 30
+                                  ),),
+                                  //The image is defined here
+                                  FadeInDown(
+                                    child: Stack(
+                                      children:
+
+                                    [
+
+                                      //The Profile Picture
+                                      ClipOval(
+                                        child: Material(
+                                          color: Colors.transparent,
+
+                                          child: Ink.image(
+                                              height: 128,
+                                              width: 128,
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(data['imageUrl']),
+                                          child: InkWell(
+                                            onTap: (){
+
+
+                                            },
+                                          ),),
+                                        ),
                                       ),
-                                    )
+
+                                      //The ka icon that one
+                                      Positioned(
+                                        right: 4,
+                                        bottom: 0,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(20)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(3.0),
+                                            child: Positioned(
+                                              right: 4,
+                                              bottom: 0,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: AppColors.splashColor2,
+                                                    borderRadius: BorderRadius.circular(20)
+                                                ),
+                                                child: const Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child: Icon(Icons.edit_outlined, color: Colors.white,),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                    ]
+                                    ),
                                   ),
-                                ),
+
+                                  SizedBox(
+                                    height: 24,
+                                  ),
+                                  FadeInUp(
+                                    child: Text('${data['First_name']}  ${data['Last_name']}',
+                                    style: TextStyle(
+
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20
+                                    ),),
+                                  ),
+                                  FadeInUp(child: Text(data['UserName'])),
+
+                                  SizedBox(height: 30,),
+
+                                  SizedBox(
+                                    height: 40,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: const [
+                                        Text('About', style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold
+                                        ),)
+                                      ],
+                                    ),
+                                  ),
+                                  const Divider()
 
 
- 
-                                FadeInLeft(
-                                  delay: Duration(milliseconds: 270),
-                                  child: GestureDetector(child: const Text('Update image',style: TextStyle(fontSize: 18),),onTap: (){
 
-                                    Navigator.push(context, PageTransition(child: UpdatePP(), type: PageTransitionType.bottomToTop));
-                                  },),
-                                ), 
-                                const SizedBox(height: 10,),
-                                FadeInRight(
-                                  delay: Duration(milliseconds: 320),
-                                  child: Text(data['UserName'],style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 24,color: Color(
-                                      0xff3d2d49)),),
-                                ),
-                                
-                                
-                                FadeInUp(
-                                  delay: Duration(milliseconds: 350),
-                                  child: ListTile(leading: Icon(Icons.info_outline),title: Text('Personal Information',style: TextStyle(color: Color(
-                                      0xff3d2d49)),),onTap: (){
-                                    Navigator.push(context, PageTransition(child: PersonalInfo(), type: PageTransitionType.leftToRightWithFade));
-                                  },),
-                                ), 
-                                FadeInUp(
-                                  delay: Duration(milliseconds: 380),
-                                  child: ListTile(leading: Icon(Icons.money),title: Text('Earnings',style: TextStyle(color: Color(
-                                      0xff3d2d49))),onTap: (){},),
-                                ),
-                                 FadeInUp(
-                                   delay: Duration(milliseconds: 400),
-                                   child: ListTile(leading: Icon(Icons.credit_card_outlined),title: Text('Payment Options',style: TextStyle(color: Color(
-                                      0xff3d2d49))),onTap: (){},),
-                                 ),
-
- 
-
-                               FadeInUp(
-                                 delay: Duration(milliseconds: 420),
-                                 child: ListTile(leading: Icon(Icons.logout_outlined),title: Text('Logout',style: TextStyle(color: Color(
-                                     0xff330944))),onTap: (){
-
-                                   LogoutModel model = LogoutModel();
-                                   model.signOut();
-                                   Navigator.pushReplacement(context, PageTransition(child: Login(),type: PageTransitionType.fade));
-                                  },),
-                               )
-                              ],
+                                ],
+                              ),
                             );
+
+
 
 
 

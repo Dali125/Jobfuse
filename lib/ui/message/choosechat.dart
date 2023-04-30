@@ -61,19 +61,20 @@ class _ChooseChatState extends State<ChooseChat> {
                         return SizedBox(
                           height: 66,
                           width: width,
-                          child: ListView.builder(
+                          child: ListView.separated(
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
                                 var userInfo = snapshot.data!.docs[index];
 
 
-                                return SizedBox(
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all()
+                                  ),
                                   height: 66,
                                   width: width,
                                   child: FadeInLeft(
                                     child: Material(
-                                      elevation: 20,
-                                      borderRadius: BorderRadius.circular(15),
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 25, right: 25, bottom: 30),
                                         child: ListTile(
@@ -94,7 +95,12 @@ class _ChooseChatState extends State<ChooseChat> {
                                     ),
                                   ),
                                 );
-                              }),
+                              }, separatorBuilder: (context, index) {
+
+                                return SizedBox(
+                                  height: 40,
+                                );
+                          },),
 
 
                         );
