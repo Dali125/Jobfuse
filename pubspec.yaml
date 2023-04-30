@@ -73,6 +73,17 @@ dependencies:
   syncfusion_flutter_pdf: ^21.1.35
   intl: ^0.17.0
   drop_down_list: ^0.0.4
+  websafe_svg:
+  animate_do:
+  bouncing_widget:
+  stylish_dialog: ^1.0.2
+  flutterwave_standard: ^1.0.7
+  uuid:
+  flutter_inappwebview:
+  ade_flutterwave_working_version:
+  http:
+  flutter_paystack: ^1.0.7
+  email_validator:
 
 
 

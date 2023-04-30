@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -92,39 +93,57 @@ class _SelectedPostState extends State<SelectedPost> {
                                   children: [
                                     const SizedBox(height:
                                     10,),
-                                    Text(widget.title,style: const TextStyle(
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.bold
-                                    ),),
+                                    FadeInDown(
+                                      delay: const Duration(milliseconds: 200),
+                                      child: Center(
+                                        child: Text(widget.title,style: const TextStyle(
+                                            fontSize: 27,
+                                            fontWeight: FontWeight.bold
+                                        ),),
+                                      ),
+                                    ),
 
-                                    SizedBox(height: 10,),
-                                  Text('Posted by :  ${data?[0].get('UserName')}',style: TextStyle(fontSize: 20),),
-                                    SizedBox(
+                                    const SizedBox(height: 10,),
+                                  Text('Posted by :  ${data?[0].get('UserName')}',style: const TextStyle(fontSize: 20),),
+                                    const SizedBox(
                                       height: 10,
                                     ),
 
-                                    Text('Client Description',style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 26
-                                    ),),
-                                    SizedBox(height: 10,),
+                                    FadeInDown(
+                                      delay: const Duration(milliseconds: 400),
+                                      child: const Center(
+                                        child: Text('Client Description',style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 26
+                                        ),),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10,),
 
 
-                                    Text(widget.description, style: TextStyle(
-                                    ),),
+                                    FadeInDown(
+                                      delay: const Duration(milliseconds: 450),
+                                      child: Text(widget.description, style: const TextStyle(
+                                      ),),
+                                    ),
 
-                                    SizedBox(height: 10,),
-                                    TextGuide(fontSize: 20, text: 'Estimated Project Duration', padding: 1),
-                                    Text(widget.duration),
+                                    const SizedBox(height: 10,),
+                                    FadeInDown(
+                                        delay: const Duration(milliseconds: 500),
+                                        child: TextGuide(fontSize: 20, text: 'Estimated Project Duration', padding: 1)),
+
+                                    FadeInDown(
+                                        delay: const Duration(milliseconds: 550),
+                                        child: Text(widget.duration)),
 
 
-                                    SizedBox(height: 10,),
+                                    const SizedBox(height: 10,),
                                     TextGuide(fontSize: 20, text: 'Experience Level', padding: 1),
 
                                     Text(widget.experienceLevel),
                                     
-                                    SizedBox(height: 10,),
-                                    Text('Estimated Budget', style: TextStyle(fontSize: 20),),
+                                    const SizedBox(height: 10,),
+                                    const Text('Estimated Budget', style: TextStyle(fontSize: 20),),
                                     
                                     Text(widget.budget.toString())
 
@@ -159,7 +178,7 @@ class _SelectedPostState extends State<SelectedPost> {
                                       )));
 
                                     }, buttonText: 'Edit Post'),
-                                    SizedBox(width: 15,),
+                                    const SizedBox(width: 15,),
                                     //To Delete a post
                                     MyButton(onTap: (){
 
@@ -177,7 +196,7 @@ class _SelectedPostState extends State<SelectedPost> {
                                       Fluttertoast.showToast(msg: 'Operation Successfull', gravity: ToastGravity.BOTTOM);
 
 
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home()));
 
 
 
@@ -218,7 +237,7 @@ class _SelectedPostState extends State<SelectedPost> {
                     }else{
 
 
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }

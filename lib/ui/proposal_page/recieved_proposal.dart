@@ -4,6 +4,7 @@
 //Getting their details
 // Now, we style the ui
 
+import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -60,8 +61,12 @@ class _ReceivedProposalState extends State<ReceivedProposal> {
 
                            var otherUser = snapshot.data!.docs[index];
                            String freelanceID = otherUser['freelance_id'];
+                           String remarks = otherUser['remarks'];
+                           String proposalsID = otherUser['proposal_id'];
 
-                           return ReceivedBlock(freelanceID: freelanceID,);
+                           return FadeInUp(
+                             delay: const Duration(milliseconds: 200),
+                               child: ReceivedBlock(freelanceID: freelanceID, remarks: remarks, proposalsID:proposalsID ));
 
 
 

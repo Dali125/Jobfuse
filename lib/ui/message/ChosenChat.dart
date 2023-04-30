@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:jobfuse/ui/colors/colors.dart';
 import 'package:jobfuse/ui/components/ui-rands/mt_textfield.dart';
 
 import '../../logic/senderMessage.dart';
@@ -10,7 +11,8 @@ import '../../logic/senderMessage.dart';
 class MyChosenChat extends StatefulWidget {
   String currentUser;
   String otherUser;
-  MyChosenChat({Key? key, required this.currentUser, required this.otherUser})
+  String chattername;
+  MyChosenChat({Key? key, required this.currentUser, required this.otherUser, required this.chattername})
       : super(key: key);
 
   @override
@@ -78,18 +80,18 @@ class _MyChosenChatState extends State<MyChosenChat> {
     return Scaffold(
         appBar: AppBar(
 
-          leading:     Container(
+          leading:Container(
 
             height: 30,
             width: 30,
             clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 shape: BoxShape.circle),
             child: Image.network(
               'https://picsum.photos/seed/312/600',
               fit: BoxFit.cover,
             ),
-          ),
+          ),title: Text(widget.chattername),
 
         ),
         body: FutureBuilder(
@@ -120,7 +122,7 @@ class _MyChosenChatState extends State<MyChosenChat> {
                                 color: dat2['from'].toString() ==
                                         widget.currentUser
                                     ? const Color(0xff7423c9)
-                                    : Colors.white,
+                                    : AppColors.logColor,
                                 elevation: 8,
                                 child: Padding(
                                   padding: const EdgeInsets.all(12),
@@ -145,7 +147,7 @@ class _MyChosenChatState extends State<MyChosenChat> {
 
                 //For the text field
                 Padding(
-                  padding: EdgeInsets.only(left: 18),
+                  padding: const EdgeInsets.only(left: 18),
                   child: MyTextField(controller: _textContrroller,
 
 

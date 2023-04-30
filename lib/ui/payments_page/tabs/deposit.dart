@@ -1,3 +1,6 @@
+import 'package:ade_flutterwave_working_version/core/ade_flutterwave.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drop_down_list/drop_down_list.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
@@ -7,6 +10,7 @@ import 'package:jobfuse/logic/balance_logic.dart';
 import 'package:jobfuse/ui/components/ui-rands/drop_down_for_payment_optoons.dart';
 import 'package:jobfuse/ui/components/ui-rands/mt_textfield.dart';
 import 'package:jobfuse/constant_values/auth_values.dart';
+import 'package:jobfuse/ui/payments_page/tabs/transfer_options/payment_options/pay_with_card.dart';
 import '../../colors/colors.dart';
 import '../../components/ui-rands/my_button.dart';
 
@@ -18,6 +22,7 @@ class Deposit extends StatefulWidget {
 }
 
 class _DepositState extends State<Deposit> {
+
 
 
   final List<SelectedListItem> _listOfCities = [
@@ -79,11 +84,12 @@ class _DepositState extends State<Deposit> {
           elevation: 10,
           shadowColor: Colors.black87,
           expandedHeight: 120,
-          flexibleSpace: const Center(
+          flexibleSpace: Center(
             child: Text('Money Management',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30
+                  ,color: AppColors.splashColor2
               ),),
           ),
         ),
@@ -94,64 +100,123 @@ class _DepositState extends State<Deposit> {
           child: SizedBox(
             height: height,
             width: width,
-            child: Column(
+            child: FutureBuilder(
+                  future: FirebaseFirestore.instance.collection('users').
+                where('Userid',isEqualTo: FirebaseAuth.instance.currentUser!.uid.toString()).get(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
 
-              children: [
+                     var data = snapshot.data.docs[0];
+                      return Column(
 
-                const SizedBox(
-                  height: 30,
-                ),
-                MyTextField(controller: amountController,
-                  hintText: 'Enter Amount',
-                  obscureText: false,
-                  keyboardType: TextInputType.number,
-                  errortext: _errorText,
-                ),
+                        children: [
 
-
-
-
-                SizedBox(
-                  height: 60,
-                ),
-                Text('The dropdown comes here, choice is confirmed by pressing continue'),
-
-
-              DropTextFieldForPayment(controller: payTex,),
-
-                SizedBox(
-                  height: 60,
-                ),
-
-                MyButton(onTap: (){
-
-                  MyBalance myb = MyBalance(amount: int.parse(amountController.text.trim().toString()), apiaccepted: 700, uid: FirebaseAuth.instance.currentUser!.uid.toString());
-                  myb.increaseBalance();
-                  setState(() {
-                    _errorText;
-                  });
-
-                  _errorText;
-                  print(_errorText);
-
-                }, buttonText: 'TestButton'),
-
-
-                // Expanded(child:
-                //
-                //
-                //   MyTextField(),
-                //
-                //
-                // ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          FadeInUp(
+                            delay: Duration(milliseconds: 500),
+                            child: MyTextField(controller: amountController,
+                              hintText: 'Enter Amount',
+                              obscureText: false,
+                              keyboardType: TextInputType.number,
+                              errortext: _errorText,
+                            ),
+                          ),
 
 
 
 
+                          SizedBox(
+                            height: 60,
+                          ),
+                          Text('The dropdown comes here, choice is confirmed by pressing continue'),
 
-              ],
-            ),
-          ),
+
+
+                          InkWell(
+                            onTap: (){
+
+                              var data32 = {
+                                'amount': "600",
+                                'email' : "dalitsongulube@gmail.com",
+                                'phone' : "0977106765",
+                                'name' : 'Dalitso Ngulube',
+                                'title' : "Deposit to Jobfuse Account",
+                                'currency': "USD",
+                                'tex_ref': "Jobfuse-${DateTime.now().millisecondsSinceEpoch}",
+                                'icon' : "",
+                                'public_key': "FLWPUBK_TEST-45b9580aa5d7bce2aacf9ee82af3592f-X",
+                                'sk_key' : "FLWSECK_TEST-091904fbc6c28d2cf25c06448569de9a-X"
+
+                              };
+
+
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CardPayment()
+
+                              )
+                                ,
+                              );
+                            },
+                            child: Container(
+
+                              child: Text('Test'),
+                            ),
+                          ),
+
+                          FadeInUp(
+                              delay: Duration(milliseconds: 700),
+
+                              child: DropTextFieldForPayment(controller: payTex,)),
+
+                          const SizedBox(
+                            height: 60,
+                          ),
+
+                          FadeInUp(
+                            delay: Duration(milliseconds: 900),
+                            child: MyButton(onTap: (){
+
+
+
+
+
+
+
+
+                              MyBalance myb = MyBalance(amount: int.parse(amountController.text.trim().toString()), apiaccepted: 700, uid: FirebaseAuth.instance.currentUser!.uid.toString());
+                              myb.increaseBalance();
+                              setState(() {
+                                _errorText;
+                              });
+
+                              _errorText;
+                              print(_errorText);
+
+                            }, buttonText: 'Continue'),
+                          ),
+
+
+                          // Expanded(child:
+                          //
+                          //
+                          //   MyTextField(),
+                          //
+                          //
+                          // ),
+
+
+
+
+
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Icon(Icons.error_outline);
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  })),
         )
       ],
     );

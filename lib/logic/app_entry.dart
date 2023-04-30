@@ -8,19 +8,14 @@ class appEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
 
-      ),
 
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
 
-      ),
-      themeMode: ThemeMode.system,
 
 
       debugShowCheckedModeBanner: false,
+
+
 
 
 

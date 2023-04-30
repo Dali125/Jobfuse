@@ -69,7 +69,10 @@ class _ContractsPageState extends State<ContractsPage> {
                 where('involvedParties',arrayContains: myUserID).snapshots(),
                 builder: (context, snapshot){
 
+
+
                   if(snapshot.hasData){
+
 
                     return ListView.builder(
                         itemCount: snapshot.data!.docs.length,

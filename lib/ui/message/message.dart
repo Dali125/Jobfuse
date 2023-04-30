@@ -24,7 +24,16 @@ class _ChatsState extends State<Chats> {
            backgroundColor: AppColors.logColor,
 
             expandedHeight: 120,
-            flexibleSpace: const Center(child: Text('Messages', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),)),
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.only(left: 25, top: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+
+                  Text('Messages', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                ],
+              ),
+            ),
           ),
           SliverToBoxAdapter(child: ChooseChat(),)
         ],

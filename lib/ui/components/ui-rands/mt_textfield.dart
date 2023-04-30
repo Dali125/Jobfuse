@@ -6,6 +6,7 @@ class MyTextField extends StatelessWidget {
   final bool obscureText;
   final keyboardType;
   final errortext;
+  final validator;
 
   const MyTextField({
     super.key,
@@ -14,13 +15,15 @@ class MyTextField extends StatelessWidget {
     required this.obscureText,
     this.keyboardType,
     this.errortext,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: TextField(
+      child: TextFormField(
+        validator: validator,
         keyboardType: keyboardType,
         controller: controller,
         obscureText: obscureText,
@@ -28,6 +31,7 @@ class MyTextField extends StatelessWidget {
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
             ),
+
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.grey.shade400),
             ),

@@ -80,24 +80,6 @@ class _MyHomeState extends State<MyHome> with SingleTickerProviderStateMixin{
       CustomScrollView(
 
           slivers: [
-            SliverAppBar(
-              forceElevated: true,
-              elevation: 20,
-              stretch: true,
-              backgroundColor: AppColors.logColor,
-              flexibleSpace: Center
-
-                (child: Text('Jobs',style:
-
-              TextStyle(fontSize: 30),)),
-              expandedHeight: 120,
-
-
-            )
-
-            ,
-
-
             SliverToBoxAdapter(
               child: SizedBox(
                 height: height,

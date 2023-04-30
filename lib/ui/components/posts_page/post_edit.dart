@@ -167,7 +167,7 @@ class PostEdit extends StatelessWidget {
 
                         // pedit.performEdit();
 
-                        Fluttertoast.showToast(msg: 'Operation Successfull', gravity: ToastGravity.BOTTOM);
+                        Fluttertoast.showToast(msg: 'Operation Successful', gravity: ToastGravity.BOTTOM);
 
 
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));

@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:jobfuse/ui/colors/colors.dart';
 import 'package:jobfuse/ui/components/posts_page/create_post.dart';
@@ -21,10 +22,45 @@ class _MyFABState extends State<MyFAB> {
       child: IconButton(
 
           onPressed: (){
-        Navigator.of(context).push(_createRoute());
+
+        showModalBottomSheet(context: context,
+            builder: (context){
+
+          return Column(
+
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              FadeInUp(
+
+                delay: const Duration(milliseconds: 200),
+                child: ListTile(
+                  leading: const Icon(Icons.add,color: Colors.blue,),
+                  title: const Text('Create Post'),
+
+                  onTap:(){
+
+                    Navigator.of(context).push(_createRoute());
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text('Dalitso'),
+              ),
+              ListTile(
+                title: Text('Dalitso'),
+              ),
+
+
+
+            ],
+          );
+
+
+        });
         
-        
-      }, icon: const Icon(Icons.add),
+      }, icon: const Icon(Icons.arrow_upward),
       ),
     );
   }

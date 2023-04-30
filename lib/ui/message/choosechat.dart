@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -35,10 +36,10 @@ class _ChooseChatState extends State<ChooseChat> {
         .where('users', arrayContains: CurrentUser).snapshots(), builder: (context, snapshot){
 
 
-//If data is there
+         //If data is there
       if(snapshot.hasData) {
         return SizedBox(
-          height: height,
+             height: height,
           width: width,
           child: ListView.builder(
               itemCount: snapshot.data!.docs.length,
@@ -69,20 +70,27 @@ class _ChooseChatState extends State<ChooseChat> {
                                 return SizedBox(
                                   height: 66,
                                   width: width,
-                                  child: DelayedDisplay(
-                                    delay:Duration(milliseconds: 200),
-                                    child: ListTile(
-                                      title: Text(userInfo['UserName']),
-                                      subtitle: Text('hi'),
+                                  child: FadeInLeft(
+                                    child: Material(
+                                      elevation: 20,
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 25, right: 25, bottom: 30),
+                                        child: ListTile(
+                                          title: Text(userInfo['UserName']),
+                                          subtitle: Text('hi'),
 
-                                      onTap: () {
-                                        Navigator.push(context,
-                                            PageTransition(child: MyChosenChat(
-                                                currentUser: CurrentUser,
-                                                otherUser: otherUserString),
-                                                type: PageTransitionType
-                                                    .leftToRightWithFade));
-                                      },
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                PageTransition(child: MyChosenChat(
+                                                  chattername: userInfo['UserName'],
+                                                    currentUser: CurrentUser,
+                                                    otherUser: otherUserString),
+                                                    type: PageTransitionType
+                                                        .leftToRightWithFade));
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 );
@@ -91,21 +99,32 @@ class _ChooseChatState extends State<ChooseChat> {
 
                         );
                       } else {
-                        return Shimmer(child: Container(
-                          height: 64,
-                          width: width,
-                          color: AppColors.splashColor2,
-                        ));
+                        return Column(
+                          children: [
+                            Shimmer(child: Container(
+                              height: 64,
+                              width: width,
+                              color: AppColors.logColor,
+                            )),
+                            SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        );
                       }
                     });
               }),
         );
       }else {
-        return Shimmer(child: Container(
-          height: 64,
-          width: width,
-          color: AppColors.splashColor2,
-        ));
+        return Column(
+          children: [
+            Shimmer(child: Container(
+              height: 64,
+              width: width,
+              color: AppColors.logColor,
+            )),
+          ],
+        );
       }
     });
   }

@@ -45,7 +45,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
 
           backgroundColor: AppColors.logColor,
-          expandedHeight: 120,
+          expandedHeight: 80,
           flexibleSpace: const Center(
             child: Text('My Info', style: TextStyle(
               fontSize: 30
@@ -199,7 +199,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           onTap: (){
 
 
-                            Navigator.push(context, PageTransition(child: UpdateInfo(), type: PageTransitionType.bottomToTop));
+                            Navigator.push(context, PageTransition(child: UpdateInfo(data: userData), type: PageTransitionType.bottomToTop));
                           },
                         )
 

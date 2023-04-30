@@ -7,13 +7,16 @@ import '../../logic/update_user_logic.dart';
 import '../colors/colors.dart';
 
 class UpdateInfo extends StatefulWidget {
-  const UpdateInfo({Key? key}) : super(key: key);
+  final data;
+  const UpdateInfo({Key? key, this.data}) : super(key: key);
 
   @override
   State<UpdateInfo> createState() => _UpdateInfoState();
 }
 
 class _UpdateInfoState extends State<UpdateInfo> {
+
+
 
 
   @override
@@ -30,7 +33,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
         slivers: [
           SliverAppBar(
             stretch: true,
-            expandedHeight: 120,
+            expandedHeight: 80,
             backgroundColor: AppColors.logColor,
             flexibleSpace: const Center(child:
             Text('Update User Details',style: TextStyle(
@@ -61,11 +64,12 @@ class _UpdateInfoState extends State<UpdateInfo> {
                           var myData = snapshot.data?.docs[index];
 
 
-                          TextEditingController firstName = TextEditingController(text: myData?['First_name']);
-                          TextEditingController UserName = TextEditingController(text: myData?['UserName']);
+                          TextEditingController firstName = TextEditingController();
+                          TextEditingController UserName = TextEditingController();
                           TextEditingController lastName = TextEditingController(text: myData?['Last_name']);
                           TextEditingController phone_number = TextEditingController(text: myData?['Phone_Number'].toString());
                           TextEditingController nrc = TextEditingController(text: myData?['NRC_NUMBER']);
+
 
 
                           return Container(
@@ -85,6 +89,7 @@ class _UpdateInfoState extends State<UpdateInfo> {
                                   ),
 
                                   child: TextFormField(
+                                    initialValue: myData?['UserName'],
 
                                     decoration: InputDecoration(
                                         border: OutlineInputBorder(

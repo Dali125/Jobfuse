@@ -2,6 +2,7 @@
 
 
 
+import 'package:animate_do/animate_do.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +43,9 @@ class _PaymentsHomeState extends State<PaymentsHome> {
   List tabs = [
     PayMentHome(uid: FirebaseAuth.instance.currentUser!.uid.toString()),
 
-    Deposit(),
-    Transfer(),
-    Center(child: Text('4'),),
+    const Deposit(),
+    const Transfer(),
+    const Center(child: Text('4'),),
 
   ];
 
@@ -70,29 +71,31 @@ class _PaymentsHomeState extends State<PaymentsHome> {
 
 
 
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: FadeInUpBig(
+        child: BottomNavigationBar(
 
 
-        currentIndex: currentIndex,
-        showUnselectedLabels: true,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: AppColors.splashColor,
-        backgroundColor: AppColors.logColor,
-        unselectedLabelStyle: TextStyle(
-          color: Colors.black
-        ),
-        selectedLabelStyle: TextStyle(
+          currentIndex: currentIndex,
+          showUnselectedLabels: true,
+          unselectedItemColor: Colors.black,
+          selectedItemColor: AppColors.splashColor,
+          backgroundColor: AppColors.logColor,
+          unselectedLabelStyle: const TextStyle(
             color: Colors.black
+          ),
+          selectedLabelStyle: const TextStyle(
+              color: Colors.black
+          ),
+
+          onTap: (index){
+            setState(() {
+              currentIndex = index;
+            });
+          },
+          items: paymentBar,
+          enableFeedback: true,
+
         ),
-
-        onTap: (index){
-          setState(() {
-            currentIndex = index;
-          });
-        },
-        items: paymentBar,
-        enableFeedback: true,
-
       ),
     );
   }

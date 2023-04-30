@@ -3,16 +3,12 @@ import 'dart:math';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:jobfuse/animations/expandable_fab.dart';
+import 'package:jobfuse/ui/components/posts_page/main_posts.dart';
 import 'package:jobfuse/ui/contracts/contracts_page.dart';
 import 'package:jobfuse/ui/floating_action_button/my_floating_button.dart';
-import 'package:scaffold_gradient_background/scaffold_gradient_background.dart';
-import 'package:spincircle_bottom_bar/modals.dart';
-import 'package:spincircle_bottom_bar/spincircle_bottom_bar.dart';
 import '../../colors/colors.dart';
 import '../../message/message.dart';
 import '../../proposal_page/proposals.dart';
-import '../posts_page/posts.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -24,11 +20,11 @@ class MainPage extends StatefulWidget {
 int _currentIndex = 0;
 
 var tabs = <Widget>[
-  MyHome(),
+  const JobsHome(),
  // Center(child: Text('2'),),
-  Proposals(),
-  ContractsPage(),
-  Chats(),
+  const Proposals(),
+  const ContractsPage(),
+  const Chats(),
 ];
 
 
@@ -97,7 +93,7 @@ class _MainPageState extends State<MainPage> with SingleTickerProviderStateMixin
       ),
 
 
-      floatingActionButton: MyFAB(),
+      floatingActionButton: const MyFAB(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
 
