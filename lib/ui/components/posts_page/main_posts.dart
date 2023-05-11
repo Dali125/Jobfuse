@@ -6,6 +6,7 @@ import 'package:jobfuse/ui/components/posts_page/tabs/Search.dart';
 import 'package:jobfuse/ui/proposal_page/recieved_proposal.dart';
 import 'package:jobfuse/ui/proposal_page/submitted_proposals.dart';
 
+import '../../bookmarks/mybookmarks.dart';
 import '../../drawer/my_drawer.dart';
 
 
@@ -63,7 +64,7 @@ class _JobsHomeState extends State<JobsHome> {
 
             MyHome(),
 
-            Text('Saved Posts'),
+            MyBookmarks(),
 
             SearchJobs()
 

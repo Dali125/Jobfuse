@@ -18,27 +18,16 @@ class EditPost{
 
 
 
- void deletePost() {
+  deletePost() async {
 
   print(documentId);
-   FirebaseFirestore.instance.collection('ProjectTasks').doc(documentId).delete();
+ await  FirebaseFirestore.instance.collection('ProjectTasks').doc(documentId).delete();
 
  }
  
  
  
- 
- // void performEdit() {
- //  FirebaseFirestore.instance.collection('ProjectTasks').
- //      where('DocumentID', isEqualTo: documentId).
- //     set({
- //        'Budget' : budget,
- //        'Description' : description,
- //        'Duration' : duration,
- //        'ExperienceLevel' : experiencelevel,
- //        'title': title
- //       });
- //      }
+
   
  }
 

@@ -76,9 +76,12 @@ class _MyProfileState extends State<MyProfile> {
 
                                 children: [
 
-                                  Text('Profile', style: TextStyle(
-                                    fontSize: 30
-                                  ),),
+                                  FadeInDown(
+                                    delay: const Duration(milliseconds: 200),
+                                    child: Text('Profile', style: TextStyle(
+                                      fontSize: 35
+                                    ),),
+                                  ),
                                   //The image is defined here
                                   FadeInDown(
                                     child: Stack(
@@ -142,6 +145,7 @@ class _MyProfileState extends State<MyProfile> {
                                     height: 24,
                                   ),
                                   FadeInUp(
+                                    delay:Duration(milliseconds: 300),
                                     child: Text('${data['First_name']}  ${data['Last_name']}',
                                     style: TextStyle(
 
@@ -149,7 +153,9 @@ class _MyProfileState extends State<MyProfile> {
                                       fontSize: 20
                                     ),),
                                   ),
-                                  FadeInUp(child: Text(data['UserName'])),
+                                  FadeInUp(
+                                  delay: Duration(milliseconds: 300),
+                                      child: Text(data['UserName'])),
 
                                   SizedBox(height: 30,),
 
@@ -157,15 +163,34 @@ class _MyProfileState extends State<MyProfile> {
                                     height: 40,
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
-                                      children: const [
-                                        Text('About', style: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold
-                                        ),)
+                                      children: [
+                                        FadeInLeft(
+                                          delay: Duration(milliseconds: 450),
+                                          child: Text('About', style: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold
+                                          ),),
+                                        )
                                       ],
                                     ),
                                   ),
-                                  const Divider()
+                                  FadeInLeft(child: const Divider()),
+
+                                SizedBox(
+
+                                  height: 30,
+
+                                  child: Row(
+
+                                    children: [
+                                      FadeInLeft(
+                                        delay:Duration(milliseconds: 500),
+                                        child: Text(data['about'],
+                                        style: TextStyle(fontSize: 20),),
+                                      )
+                                    ],
+                                  )
+                                )
 
 
 

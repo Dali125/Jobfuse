@@ -132,7 +132,8 @@ class _PayMentHomeState extends State<PayMentHome> {
 
                                 if(snapshot.hasData) {
 
-                                  return Text('Balance  \n  ${balanceData['balance'].toString()}',
+                                  return
+                                    Text('Balance  \n  ${balanceData['balance'].toString()}',
                                   style: const TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold

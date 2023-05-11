@@ -34,6 +34,7 @@ class _ReceivedProposalState extends State<ReceivedProposal> {
   Widget build(BuildContext context) {
 
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return
         StreamBuilder(//Getting all proposals sent to this user
             stream: FirebaseFirestore.instance.collection('proposals').
@@ -63,10 +64,11 @@ class _ReceivedProposalState extends State<ReceivedProposal> {
                            String freelanceID = otherUser['freelance_id'];
                            String remarks = otherUser['remarks'];
                            String proposalsID = otherUser['proposal_id'];
+                           String documentID = otherUser['document_id'];
 
                            return FadeInUp(
                              delay: const Duration(milliseconds: 200),
-                               child: ReceivedBlock(freelanceID: freelanceID, remarks: remarks, proposalsID:proposalsID ));
+                               child: ReceivedBlock(freelanceID: freelanceID, remarks: remarks, proposalsID:proposalsID , documentID: documentID));
 
 
 
@@ -81,7 +83,19 @@ class _ReceivedProposalState extends State<ReceivedProposal> {
 
 
 
-                   }else{
+                   }else if(snapshot.data == null){
+
+                     return Container(
+
+
+                       height: height,
+                       width: width,
+                       child: Center(child: Text('No Proposals Yet, Check Back Later'),),
+
+                     );
+                   }
+
+                   else{
 
 
                      return const Text('Nothing to show here');

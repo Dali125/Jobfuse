@@ -12,7 +12,8 @@ class ConfirmHire extends StatefulWidget {
   final String clientId;
   final String freelanceId;
   final String proposalsID;
-  const ConfirmHire({Key? key, required this.clientId, required this.freelanceId, required this.proposalsID,
+  final String docID;
+  const ConfirmHire({Key? key,required this.docID, required this.clientId, required this.freelanceId, required this.proposalsID,
 
 
   }) : super(key: key);
@@ -77,7 +78,7 @@ class _ConfirmHireState extends State<ConfirmHire> {
 
 
 
-                    Hire confirm = Hire(currentUserId: widget.clientId, freelanceUserId: widget.freelanceId, proposalsID: widget.proposalsID);
+                    Hire confirm = Hire(widget.docID,currentUserId: widget.clientId, freelanceUserId: widget.freelanceId, proposalsID: widget.proposalsID);
                     confirm.confirmHire();
 
                     setState(() {

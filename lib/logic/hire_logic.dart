@@ -1,15 +1,17 @@
-
+library hire_logic;
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+export 'package:jobfuse/logic/hire_logic.dart' show confirmHire;
 
 class Hire{
 final String currentUserId;
 final String freelanceUserId;
 final String proposalsID;
+final String docID;
 
 
-  Hire( { required this.currentUserId,
+  Hire(this.docID,  { required this.currentUserId,
         required this.freelanceUserId,required this.proposalsID,
   });
 
@@ -31,7 +33,10 @@ final String proposalsID;
 
       'BeginDate' : Timestamp.now(),
       'involvedParties': {
+        //The Client
         currentUserId,
+
+        //The freelancer
         freelanceUserId
       },
       'projectID': proposalsID,
@@ -39,9 +44,16 @@ final String proposalsID;
 
 
     });
+    DeleteRequest();
 
   }
 
+  
+  
+  DeleteRequest(){
+    
+    FirebaseFirestore.instance.collection('proposals').doc(docID).delete();
+  }
 
 
 }

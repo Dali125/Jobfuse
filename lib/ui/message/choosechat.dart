@@ -78,12 +78,17 @@ class _ChooseChatState extends State<ChooseChat> {
                                       child: Padding(
                                         padding: const EdgeInsets.only(left: 25, right: 25, bottom: 30),
                                         child: ListTile(
+                                          leading: CircleAvatar(
+                                            
+                                            child: Image.network(userInfo['imageUrl']),
+                                          ),
                                           title: Text(userInfo['UserName']),
                                           subtitle: Text('hi'),
 
                                           onTap: () {
                                             Navigator.push(context,
                                                 PageTransition(child: MyChosenChat(
+                                                  chatterImage: userInfo['imageUrl'],
                                                   chattername: userInfo['UserName'],
                                                     currentUser: CurrentUser,
                                                     otherUser: otherUserString),

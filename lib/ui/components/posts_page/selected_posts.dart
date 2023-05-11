@@ -40,8 +40,11 @@ class _SelectedPostState extends State<SelectedPost> {
   //Current User/Freelance ID
   String myId = FirebaseAuth.instance.currentUser!.uid.toString();
 
-  @override
-  Widget build(BuildContext context) {
+  //The Controller of the remarks , which we shall post in the proposal
+  final remarksController = TextEditingController();
+
+   @override
+   Widget build(BuildContext context) {
 
 
     //Width of Screen
@@ -53,8 +56,7 @@ class _SelectedPostState extends State<SelectedPost> {
     print({height-150}.toString());
     return
 
-
-        Scaffold(
+      Scaffold(
           appBar: AppBar(
             title: const Center(child: Text('Job Details     ',style: TextStyle(fontSize: 30),)),
             backgroundColor: AppColors.logColor,
@@ -65,185 +67,219 @@ class _SelectedPostState extends State<SelectedPost> {
 
 
               //Getting Post from Database
-                StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection('users').where('Userid', isEqualTo: widget.clientId).snapshots(),
-                  builder: (context, snapshot){
+                SingleChildScrollView(
+                  child: SizedBox(
+                    height: height,
+                    width: width,
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection('users').where('Userid', isEqualTo: widget.clientId).snapshots(),
+                      builder: (context, snapshot){
 
-                    if(snapshot.hasData){
+                        if(snapshot.hasData){
 
-                      var data = snapshot.data?.docs.toList();
+                          var data = snapshot.data?.docs.toList();
 
-                      print(data?[0].get('UserName'));
+                          print(data?[0].get('UserName'));
 
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
 
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
 
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: width,
-                              height: height - 180,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height:
-                                    10,),
-                                    FadeInDown(
-                                      delay: const Duration(milliseconds: 200),
-                                      child: Center(
-                                        child: Text(widget.title,style: const TextStyle(
-                                            fontSize: 27,
-                                            fontWeight: FontWeight.bold
-                                        ),),
-                                      ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                  width: width,
+                                  height: height - 180,
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(height:
+                                        10,),
+                                        FadeInDown(
+                                          delay: const Duration(milliseconds: 200),
+                                          child: Center(
+                                            child: Text(widget.title,style: const TextStyle(
+                                                fontSize: 27,
+                                                fontWeight: FontWeight.bold
+                                            ),),
+                                          ),
+                                        ),
+
+                                        const SizedBox(height: 10,),
+                                      Text('Posted by :  ${data?[0].get('UserName')}',style: const TextStyle(fontSize: 20),),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+
+                                        FadeInDown(
+                                          delay: const Duration(milliseconds: 400),
+                                          child: const Center(
+                                            child: Text('Client Description',style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 26
+                                            ),),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 10,),
+
+
+                                        FadeInDown(
+                                          delay: const Duration(milliseconds: 450),
+                                          child: Text(widget.description, style: const TextStyle(
+                                          ),),
+                                        ),
+
+                                        const SizedBox(height: 10,),
+                                        FadeInDown(
+                                            delay: const Duration(milliseconds: 500),
+                                            child: TextGuide(fontSize: 20, text: 'Estimated Project Duration', padding: 1)),
+
+                                        FadeInDown(
+                                            delay: const Duration(milliseconds: 550),
+                                            child: Text(widget.duration)),
+
+
+                                        const SizedBox(height: 10,),
+                                        TextGuide(fontSize: 20, text: 'Experience Level', padding: 1),
+
+                                        Text(widget.experienceLevel),
+
+                                        const SizedBox(height: 10,),
+                                        const Text('Estimated Budget', style: TextStyle(fontSize: 20),),
+
+                                        Text(widget.budget.toString())
+
+
+
+
+                                      ],
                                     ),
-
-                                    const SizedBox(height: 10,),
-                                  Text('Posted by :  ${data?[0].get('UserName')}',style: const TextStyle(fontSize: 20),),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-
-                                    FadeInDown(
-                                      delay: const Duration(milliseconds: 400),
-                                      child: const Center(
-                                        child: Text('Client Description',style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 26
-                                        ),),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10,),
-
-
-                                    FadeInDown(
-                                      delay: const Duration(milliseconds: 450),
-                                      child: Text(widget.description, style: const TextStyle(
-                                      ),),
-                                    ),
-
-                                    const SizedBox(height: 10,),
-                                    FadeInDown(
-                                        delay: const Duration(milliseconds: 500),
-                                        child: TextGuide(fontSize: 20, text: 'Estimated Project Duration', padding: 1)),
-
-                                    FadeInDown(
-                                        delay: const Duration(milliseconds: 550),
-                                        child: Text(widget.duration)),
-
-
-                                    const SizedBox(height: 10,),
-                                    TextGuide(fontSize: 20, text: 'Experience Level', padding: 1),
-
-                                    Text(widget.experienceLevel),
-                                    
-                                    const SizedBox(height: 10,),
-                                    const Text('Estimated Budget', style: TextStyle(fontSize: 20),),
-                                    
-                                    Text(widget.budget.toString())
-
-
-
-
-                                  ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                          //For the Button to apply
-                          Expanded(
-                              flex: 1,
-                              child: widget.clientId == myId ? Padding(
-                                padding: const EdgeInsets.only(bottom: 10),
-                                child: Row(
-                                  children: [
-                                    MyButton(onTap: (){
+                              //For the Button to apply
+                              Expanded(
+                                  flex: 1,
+                                  child: widget.clientId == myId ? Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: Row(
+                                      children: [
+                                        MyButton(onTap: (){
 
 
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PostEdit(
-                                        experienceLevel: widget.experienceLevel,
-                                        description: widget.description,
-                                        title: widget.title,
-                                        budget: widget.budget,
-                                        clientId: widget.clientId,
-                                        duration: widget.duration,
-                                        projectID: widget.documentId
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PostEdit(
+                                            experienceLevel: widget.experienceLevel,
+                                            description: widget.description,
+                                            title: widget.title,
+                                            budget: widget.budget,
+                                            clientId: widget.clientId,
+                                            duration: widget.duration,
+                                            projectID: widget.documentId
 
 
-                                      )));
+                                          )));
 
-                                    }, buttonText: 'Edit Post'),
-                                    const SizedBox(width: 15,),
-                                    //To Delete a post
-                                    MyButton(onTap: (){
+                                        }, buttonText: 'Edit Post'),
+                                        const SizedBox(width: 15,),
+                                        //To Delete a post
+                                        MyButton(onTap: (){
 
-                                      print('tapped to delete');
-                                     EditPost editpost = EditPost(budget: widget.budget,
-                                         description: widget.description,
-                                         documentId: widget.documentId,
-                                         duration: widget.duration,
-                                         experiencelevel: widget.experienceLevel,
-                                         title: widget.title);
+                                          print('tapped to delete');
+                                         EditPost editpost = EditPost(budget: widget.budget,
+                                             description: widget.description,
+                                             documentId: widget.documentId,
+                                             duration: widget.duration,
+                                             experiencelevel: widget.experienceLevel,
+                                             title: widget.title);
 
-                                      editpost.deletePost();
-
-
-                                      Fluttertoast.showToast(msg: 'Operation Successfull', gravity: ToastGravity.BOTTOM);
+                                          editpost.deletePost();
 
 
-                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home()));
+                                          Fluttertoast.showToast(msg: 'Operation Successful', gravity: ToastGravity.BOTTOM);
 
 
-
-                                    }, buttonText: 'Delete Post')
-                                  ],
-                                ),
-                              ) :
-                              MyButton(onTap: (){
+                                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home()));
 
 
 
-                                try{
-
-
-                                  ProposalSubmission psub = ProposalSubmission(widget.clientId, myId, widget.documentId);
-
-                                  psub.submitProposal();
-
-
-
-                                }catch (e){
-
-
-                                  return Fluttertoast();
-                                }
+                                        }, buttonText: 'Delete Post')
+                                      ],
+                                    ),
+                                  ) :
+                                  MyButton(onTap: (){
 
 
 
+                                    try{
+                                      showDialog<void>(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            // false = user must tap button, true = tap outside dialog
+                                            builder: (BuildContext dialogContext) {
+                                              return SingleChildScrollView(
+                                                child: AlertDialog(
+                                                  title: const Text('Enter a remark, on why you should take the job '),
+                                                  content: TextField(
+                                                    controller: remarksController,
 
-                              }, buttonText: 'Apply')
-                          )
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: const Text('Submit'),
+                                                      onPressed: () {
 
-                        ],
-                      );
+                                                        ProposalSubmission psub = ProposalSubmission(remarksController.text.trim(),widget.clientId, myId, widget.documentId);
+
+                                                        psub.submitProposal();
+                                                        Navigator.of(dialogContext)
+                                                            .pop(); // Dismiss alert dialog
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          );
+
+                                         // ProposalSubmission psub = ProposalSubmission(widget.clientId, myId, widget.documentId);
+
+                                      //psub.submitProposal();
+
+                                      Fluttertoast.showToast(msg: 'Successfully Applied for job');
+
+                                    }catch (e){
+
+
+                                      return Fluttertoast.showToast(msg: 'Operation failed');
+                                    }
 
 
 
-                    }else{
+
+                                  }, buttonText: 'Apply')
+                              )
+
+                            ],
+                          );
 
 
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
+
+                        }else{
 
 
-                  }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+
+                      }
+                    ),
+                  ),
                 ),
 
         );

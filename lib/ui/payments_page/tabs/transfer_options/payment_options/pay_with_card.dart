@@ -208,7 +208,7 @@ class _CardPaymentState extends State<CardPayment> {
                               _horizontalSizeBox,
                               Flexible(
                                 flex: 2,
-                                child: Container(
+                                child: SizedBox(
                                   width: double.infinity,
                                   child: _getPlatformButton(
                                     'Checkout',
@@ -289,6 +289,7 @@ class _CardPaymentState extends State<CardPayment> {
         ..amount = 10000 // In base currency
         ..email = 'customer@email.com'
         ..reference = _getReference()
+        ..currency = 'ZAR'
         ..putCustomField('Charged From', 'Flutter SDK');
       _chargeCard(charge);
     } else {
@@ -306,6 +307,7 @@ class _CardPaymentState extends State<CardPayment> {
 
     // Checking if the transaction is successful
     if (response.status) {
+      print(response.status);
       _verifyOnServer(reference);
       return;
     }
@@ -408,7 +410,7 @@ class _CardPaymentState extends State<CardPayment> {
 
   void _verifyOnServer(String? reference) async {
     _updateStatus(reference, 'Verifying...');
-    String url = '$backendUrl/verify/$reference';
+    String url = '$backendUrl+dUrl/verify/$reference';
     try {
       http.Response response = await http.get(Uri.parse(url));
       var body = response.body;
@@ -468,7 +470,7 @@ class MyLogo extends StatelessWidget {
       alignment: Alignment.center,
       padding: const EdgeInsets.all(10),
       child: const Text(
-        "CO",
+        "JF",
         style: TextStyle(
           color: Colors.white,
           fontSize: 13,

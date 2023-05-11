@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 String client = 'client';
 String freelancer = 'freelancer';
@@ -12,37 +13,49 @@ class RegisterModel {
   String lname;
   String nrcc;
   int number;
-  String user_name;
+  String userName;
+  final imageUrl;
+  final about;
 
 
-  RegisterModel({required this.email, required this.password, required this.fname, required this.lname, required this.nrcc, required this.number, required this.user_name});
+  RegisterModel(this.imageUrl, this.about, {required this.email, required this.password, required this.fname, required this.lname, required this.nrcc, required this.number, required this.userName});
 
   Future registerUser() async {
 
     try {
-      await FirebaseAuth.instance
+      FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      await Future.delayed(Duration(seconds: 4));
+      FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
-      storeUserDetails(fname, lname, nrcc, number, user_name);
+      storeUserDetails(fname, lname, nrcc, number, userName,imageUrl, about);
+      createWallet();
     }on FirebaseAuthException catch(e){
-      print("Failure");
+      if (kDebugMode) {
+        if (kDebugMode) {
+          print("Failure");
+        }
+      }
     }
   }
 
-  Future storeUserDetails(String firstname, String lastname, String nrc, int phonenumber, String username) async{
+  storeUserDetails(String firstname, String lastname, String nrc, int phoneNumber, String username, String imageUrl,String about){
 
 
     try{
 
 
 
-      await FirebaseFirestore.instance.collection('users').add({
+      FirebaseFirestore.instance.collection('users').add({
         'First_name':firstname,
         'Last_name': lastname,
         'NRC_NUMBER' :nrc,
-        'Phone_Number': phonenumber,
+        'Phone_Number': phoneNumber,
         'UserName': username,
-        'Userid': FirebaseAuth.instance.currentUser!.uid
+        'Userid' : FirebaseAuth.instance.currentUser!.uid.toString(),
+        'imageUrl': imageUrl,
+        'about': about,
+        'email': FirebaseAuth.instance.currentUser!.email.toString(),
 
       });
 
@@ -53,4 +66,18 @@ class RegisterModel {
 
 
   }
+
+
+
+  Future createWallet() async{
+
+    await FirebaseFirestore.instance.collection('wallet').add({
+    'Userid': FirebaseAuth.instance.currentUser!.uid.toString(),
+     'balance' : 0
+
+
+});
+
+  }
+
 }

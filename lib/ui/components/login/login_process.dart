@@ -33,7 +33,7 @@ class _ConfirmerState extends State<Confirmer> {
               return const DelayedDisplay(delay: Duration(seconds: 2),child: LoginFail());
 
             }
-            else if(snapshot.hasData && snapshot.connectionState == ConnectionState.done){
+            else if(snapshot.hasData){
 
               return const MainPage();
 

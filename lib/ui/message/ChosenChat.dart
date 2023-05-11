@@ -12,7 +12,8 @@ class MyChosenChat extends StatefulWidget {
   String currentUser;
   String otherUser;
   String chattername;
-  MyChosenChat({Key? key, required this.currentUser, required this.otherUser, required this.chattername})
+  String chatterImage;
+  MyChosenChat({Key? key, required this.currentUser, required this.otherUser, required this.chattername, required this.chatterImage})
       : super(key: key);
 
   @override
@@ -46,6 +47,7 @@ class _MyChosenChatState extends State<MyChosenChat> {
       this.groupId = "${widget.otherUser}-${widget.currentUser}";
     }
     else {
+
       int date = DateTime.now().millisecondsSinceEpoch;
       String currentU = "${widget.currentUser}";
       String groupnewId = "${widget.currentUser}-${widget.otherUser}";
@@ -88,7 +90,7 @@ class _MyChosenChatState extends State<MyChosenChat> {
             decoration: const BoxDecoration(
                 shape: BoxShape.circle),
             child: Image.network(
-              'https://picsum.photos/seed/312/600',
+              widget.chatterImage,
               fit: BoxFit.cover,
             ),
           ),title: Text(widget.chattername),

@@ -30,9 +30,9 @@ var tabs = <Widget>[
 
 var IconItems = <IconData>[
 
-  Icons.search_outlined,
-  Icons.add,
-  Icons.add,
+  Icons.home_outlined,
+  Icons.abc_sharp,
+  Icons.close,
   Icons.message_outlined,
 
 

@@ -1,10 +1,21 @@
+import 'package:animate_do/animate_do.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:jobfuse/ui/components/ui-rands/mt_textfield.dart';
+import 'package:jobfuse/ui/components/ui-rands/my_button.dart';
+import 'package:jobfuse/ui/register/imagechoose.dart';
 
 import '../../logic/models/register_model.dart';
 import '../colors/colors.dart';
 import '../components/home/home.dart';
 import '../components/login/login.dart';
+import 'dart:io';
+
+import '../components/ui-rands/expanded_text_field.dart';
+import '../components/ui-rands/text_guides.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -14,207 +25,249 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final TextEditingController _last_name = TextEditingController();
 
-  final TextEditingController _first_name = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nrc = TextEditingController();
 
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _username = TextEditingController();
+  final TextEditingController last_name = TextEditingController();
 
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController first_name = TextEditingController();
 
-  final TextEditingController _passwordMatcher = TextEditingController();
+  //The Nrc 9data Stuff
+  final TextEditingController nrc = TextEditingController();
+  final nrcRegex = RegExp(r'^\d{6}/\d{2}/\d{1}$');
 
-  final TextEditingController _phonenumber = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController username = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+
+  final TextEditingController passwordMatcher = TextEditingController();
+
+  final TextEditingController phonenumber = TextEditingController();
+
+  TextEditingController about = TextEditingController();
+
+  bool isPosted = false;
+
+  File? _image;
+  void _getImageFromCamera() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+  void _getImageFromGallery() async {
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
+  void _submitForm() async {
+
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext c) {
+          return const AlertDialog(
+            title: Text('Processing'),
+            content:  SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('Please wait...'),
+                  CircularProgressIndicator(), // add a progress indicator
+                ],
+              ),
+            ),
+          );
+        }
+    );
+    if (_image != null) {
+
+      // Upload the image to Firebase Storage and get the download URL
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('profile_pictures')
+          .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
+      final uploadTask = storageRef.putFile(_image!);
+      await uploadTask;
+      final imageUrl = await storageRef.getDownloadURL();
+
+
+
+      RegisterModel regMod = RegisterModel(imageUrl, about.text.trim(), email: email.text.trim(), password: passwordController.text.trim(), fname: first_name.text.trim(), lname: last_name.text.trim(), nrcc: nrc.text.trim(), number: int.parse(phonenumber.text.trim()), userName: username.text.trim());
+
+      regMod.registerUser();
+      setState(() {
+        isPosted = true;
+      });
+
+      Fluttertoast.showToast(msg: 'Registration Successful', gravity: ToastGravity.BOTTOM);
+
+
+
+
+      Navigator.of(context, rootNavigator: true).pop();
+      Navigator.of(context).pushNamedAndRemoveUntil('login', (Route<dynamic> route) => false);
+
+
+    }
+  }
+
 
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the
     // widget tree.
-    _email.dispose();
-    _first_name.dispose();
-    _nrc.dispose();
-    _last_name.dispose();
-    _passwordController.dispose();
-    _passwordMatcher.dispose();
-    _phonenumber.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Text(
-              'Register',
-              style: TextStyle(fontSize: 30),
-            ),
 
-            SafeArea(
-              //First Name
-              child: Padding(
-                padding: EdgeInsets.all(15),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25)),
-                      labelText: 'First Name',
-                      hintText: 'Enter your First Name'),
-                  controller: _first_name,
-                ),
-              ),
-            ),
 
-            //Last Name
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
+   return Scaffold(
 
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  labelText: 'Last Name',
-                  hintText: 'Enter your Last Name',
-                ),
-                controller: _last_name,
-              ),
-            ),
-            //UserName
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  labelText: 'User Name',
-                  hintText: 'Enter a username',
-                ),
-                controller: _username,
-              ),
-            ),
-            //NRC
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  labelText: 'ID/NRC number',
-                  hintText: 'Enter your NRC',
-                ),
-                controller: _nrc,
-              ),
-            ),
-            //Phone Number
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  labelText: 'Phone_number',
-                  hintText: 'Number Here',
-                ),
-                controller: _phonenumber,
-              ),
-            ),
-            //Email
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  labelText: 'Email',
-                  hintText: 'Ex. abd@something.com',
-                ),
-                controller: _email,
-              ),
-            ),
-//Password
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  labelText: 'Password',
-                  hintText: 'Enter your secure password',
-                ),
-                controller: _passwordController,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  labelText: 'Confirm Password',
-                  hintText: 'Enter your secure password',
-                ),
-                controller: _passwordMatcher,
-              ),
-            ),
-            Container(
-              height: 50,
-              width: 250,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: ElevatedButton(
-                onPressed: () {
-                  RegisterModel register = RegisterModel(
-                    email: _email.text.trim(),
-                    password: _passwordController.text.trim(),
-                    fname: _first_name.text.trim(),
-                    lname: _last_name.text.trim(),
-                    nrcc: _nrc.text.trim(),
-                    number: int.parse(_phonenumber.text.trim()),
-                    user_name: _username.text.trim(),
-                  );
-                  register.registerUser();
 
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) => Home()));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.splashColor,
-                  elevation: 8,
-                ),
-                child: const Text(
-                  'Register',
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Already have an account?'),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Login()));
-                  },
-                  child: Text(
-                    'Login Here',
-                    style: TextStyle(color: AppColors.splashColor),
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+     body: SingleChildScrollView(
+       child: Column(
+
+
+         children: [
+           Text('Register below with your details!'),
+
+           MyTextField(controller: first_name, hintText: 'First Name', obscureText: false),
+           SizedBox(height: 10,),
+           MyTextField(controller: last_name, hintText: 'Last Name', obscureText: false),
+           SizedBox(height: 10,),
+
+           MyTextField(controller: username, hintText: 'User Name', obscureText: false),
+           SizedBox(height: 10,),
+
+           MyTextField(controller: nrc, hintText: 'NRC Number', obscureText: false,
+
+             validator: (value){
+               if(!nrcRegex.hasMatch(value)){
+                 return 'Please enter a valid NRC number';
+               }
+             },),
+           SizedBox(height: 10,),
+           MyTextField(controller: phonenumber, hintText: 'Phone Number', obscureText: false),
+
+
+           //For the email
+           const SizedBox(height: 10,),
+           MyTextField(controller: email, hintText: 'Email',
+               validator: (value){
+                 if(!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)){
+                   return 'Please enter a valid email Address';
+                 }
+               },
+               obscureText: false),
+
+           SizedBox(height: 10,),
+           MyTextField(controller: passwordController, hintText: 'Password',
+               validator: (value){
+             if(value.length < 6){
+                   return 'Password should be at least 6 characters';
+                 }
+               },
+               obscureText: true),
+           SizedBox(height: 10,),SizedBox(height: 10,),
+
+           MyTextField(controller: passwordMatcher, hintText: 'Confirm Password',
+               validator: (value){
+                 if(value.length < 6){
+                   return 'Password should be at least 6 characters';
+                 }
+                 else if(value != passwordController.text.trim()
+
+                 ){
+
+                   return 'Passwords don\'t match';
+                 }
+               },
+               obscureText: true),
+
+
+
+
+           TextGuide(fontSize: 30, text: 'Stand out amongst the crowd,', padding: 10),
+           TextGuide(fontSize: 25, text: 'Pick an Image', padding: 10),
+
+
+           FadeInDown(child: _image != null ?
+           CircleAvatar(
+               radius: 150,
+               child: Image.file(_image!)) : Image.network('https://www.freeiconspng.com/img/23485')
+
+           ),
+           SizedBox(
+             height: 80,
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               children: [
+
+                 MyButton(onTap: (){
+
+                   _getImageFromGallery();
+
+                 }, buttonText: 'From Gallery'
+                 ),
+
+                 MyButton(onTap: (){
+
+
+                   _getImageFromCamera();
+                 }, buttonText: 'Camera'
+                 )
+
+               ],
+             ),
+           ),
+           SizedBox(height: 20)
+
+
+           ,const Text('Write an about, for the Stalkers to read'),
+
+           ExpandedTextField(controller: about, hintText: 'I like Balloons', obscureText: false)
+
+
+           ,SizedBox(height: 30,),
+
+           MyButton(onTap: (){
+
+             _submitForm();
+
+
+           }, buttonText: 'Complete Registration')
+
+
+
+
+
+
+
+         ],
+
+       ),
+     ),
+
+   );
   }
 }

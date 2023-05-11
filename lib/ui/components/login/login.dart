@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jobfuse/logic/models/login_model.dart';
 import 'package:jobfuse/ui/colors/colors.dart';
+import 'package:jobfuse/ui/register/register_page.dart';
 import '../ui-rands/mt_textfield.dart';
 import '../ui-rands/my_button.dart';
 import 'login_process.dart';
@@ -174,12 +175,23 @@ class _LoginState extends State<Login> {
                     style: TextStyle(color: Colors.grey[700]),
                   ),
                   const SizedBox(width: 4),
-                  const Text(
-                    'Register now',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+                  GestureDetector(
+
+
+                    child: const Text(
+                      'Register now',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+
+                    onTap: (){
+
+
+                      Navigator.push(context, MaterialPageRoute(builder: (context)
+                      => Register()));
+                    },
                   ),
 
 
