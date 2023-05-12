@@ -43,14 +43,14 @@ final String docID;
       'status': 'ongoing'
 
 
-    });
-    DeleteRequest();
+    }).whenComplete(() => null);
+    deleteRequest();
 
   }
 
   
   
-  DeleteRequest(){
+  deleteRequest(){
     
     FirebaseFirestore.instance.collection('proposals').doc(docID).delete();
   }

@@ -99,7 +99,7 @@ class _SelectedPostState extends State<SelectedPost> {
                                       children: [
                                         const SizedBox(height:
                                         10,),
-                                        FadeInDown(
+                                        FadeInUp(
                                           delay: const Duration(milliseconds: 200),
                                           child: Center(
                                             child: Text(widget.title,style: const TextStyle(
@@ -110,12 +110,14 @@ class _SelectedPostState extends State<SelectedPost> {
                                         ),
 
                                         const SizedBox(height: 10,),
-                                      Text('Posted by :  ${data?[0].get('UserName')}',style: const TextStyle(fontSize: 20),),
+                                      FadeInUp(
+                                          delay: const Duration(milliseconds: 300),
+                                          child: Text('Posted by :  ${data?[0].get('UserName')}',style: const TextStyle(fontSize: 20),)),
                                         const SizedBox(
                                           height: 10,
                                         ),
 
-                                        FadeInDown(
+                                        FadeInUp(
                                           delay: const Duration(milliseconds: 400),
                                           child: const Center(
                                             child: Text('Client Description',style: TextStyle(
@@ -236,7 +238,8 @@ class _SelectedPostState extends State<SelectedPost> {
 
                                                         psub.submitProposal();
                                                         Navigator.of(dialogContext)
-                                                            .pop(); // Dismiss alert dialog
+                                                            .pop();
+                                                        Fluttertoast.showToast(msg: 'Operation Successful');// Dismiss alert dialog
                                                       },
                                                     ),
                                                   ],

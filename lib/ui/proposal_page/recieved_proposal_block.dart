@@ -7,6 +7,7 @@ import 'package:jobfuse/constant_widget/confirm_hire.dart';
 import 'package:jobfuse/logic/hire_logic.dart';
 import 'package:jobfuse/ui/colors/colors.dart';
 import 'package:jobfuse/ui/components/ui-rands/my_button.dart';
+import 'package:jobfuse/ui/profile_page/stalker_profile_view.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -77,7 +78,7 @@ class _ReceivedBlockState extends State<ReceivedBlock> {
                   },
                     backgroundColor: Color(0xFFFE4a49),
                     icon: Icons.delete,
-                    label: 'Delete Proposal',
+                    label: 'Reject Proposal',
                   ),
 
 
@@ -148,13 +149,9 @@ class _ReceivedBlockState extends State<ReceivedBlock> {
                                                                      child: InkWell(
                                                                        onTap: (){
                                                                          //HEre
-                                                                         Navigator.push(context, MaterialPageRoute(builder: (context) => Container(
-                                                                           height: height,
-                                                                           width: width,
-                                                                           child: Center(
-                                                                             child: Text('I am a container, if youre seeing this, meaning that it has worked'),
-                                                                           ),
-                                                                         )));
+                                                                         Navigator.push(context, MaterialPageRoute(builder: (context) =>
+
+                                                                             StalkerView(userId: widget.freelanceID)));
                                                                        },
                                                                        child: Row(
                                                                          children: [

@@ -26,7 +26,7 @@ class _ChooseRecepientState extends State<ChooseRecepient> {
         title: Card(
 
           child: TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               prefixIcon: Icon(Icons.search_outlined),hintText: 'Search Number of recipient...'
             ),
             onChanged: (val){
@@ -48,7 +48,7 @@ class _ChooseRecepientState extends State<ChooseRecepient> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index){
 
-                    var data = snapshot.data!.docs[index].data() as Map <String, dynamic>;
+                    var data = snapshot.data!.docs[index].data();
 
                 if(name.isEmpty){
 
@@ -60,7 +60,7 @@ class _ChooseRecepientState extends State<ChooseRecepient> {
 
                       Navigator.push(context, MaterialPageRoute(builder: (context) => SendMoney(
 
-                        name: '${data['First_name']} ${data['email']}',
+                        name: '${data['First_name']} ${data['Last_name']}',
                         number: data['Phone_Number'],
                         avatar: data['imageUrl'],
                         email: data['email'],
@@ -84,7 +84,7 @@ class _ChooseRecepientState extends State<ChooseRecepient> {
 
                         Navigator.push(context, MaterialPageRoute(builder: (context) => SendMoney(
 
-                          name: '${data['First_name']} ${data['email']}',
+                          name: '${data['First_name']} ${data['Last_name']}',
                           number: data['Phone_Number'],
                           avatar: data['imageUrl'],
                           email: data['email'],

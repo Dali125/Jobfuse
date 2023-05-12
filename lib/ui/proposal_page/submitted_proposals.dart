@@ -26,7 +26,6 @@ class _SubmittedProposalsState extends State<SubmittedProposals> {
     return Container(
       height: height,
       width: width,
-      color: Colors.green,
       child: FutureBuilder(
         future: FirebaseFirestore.instance.collection('proposals').
         where('freelance_id',isEqualTo: currentUser).get(),

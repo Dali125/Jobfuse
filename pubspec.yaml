@@ -88,6 +88,7 @@ dependencies:
   expansion_widget: ^0.0.3
   mockito: ^5.4.0
   flutter_slidable: 3.0.0
+  flutter_rating_bar:
 
 
 

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expansion_widget/expansion_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jobfuse/logic/proposal_deletion.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'dart:math' as math;
@@ -23,6 +25,8 @@ class SubmittedProposalBlock extends StatefulWidget {
 
 class _SubmittedProposalBlockState extends State<SubmittedProposalBlock> {
 
+  TextEditingController remarksEdit = TextEditingController();
+
 bool? _expanded2;
 
   @override
@@ -35,8 +39,8 @@ bool? _expanded2;
 
           var userData = snapshot.data?.docs[0];
 
-          print(widget.documentID);
-          print(widget.proposalsID);
+
+
           if(snapshot.hasData) {
             return Slidable(
 
@@ -57,7 +61,7 @@ bool? _expanded2;
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Confirm Action'),
-                          content: Text('Delete proposal, this action cannot be undone ?'),
+                          content: const Text('Delete proposal, this action cannot be undone ?'),
                           actions: <Widget>[
                             TextButton(onPressed: ()async{
 
@@ -78,7 +82,7 @@ bool? _expanded2;
                               },
 
 
-                              child: Text('No', style: TextStyle(color: Colors.red),),
+                              child: const Text('No', style: TextStyle(color: Colors.red),),
                             ),
                           ],
                         );
@@ -87,7 +91,7 @@ bool? _expanded2;
 
 
                   },
-                    backgroundColor: Color(0xFFFE4a49),
+                    backgroundColor: const Color(0xFFFE4a49),
                     icon: Icons.delete,
                     label: 'Delete Proposal',
                   ),
@@ -117,7 +121,7 @@ bool? _expanded2;
                                 Colors.white, AppColors.logColor, easeInValue),
                             child: InkWell(
                               onTap: () => toogleFunction(animated: true), child: Padding(
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -160,16 +164,16 @@ bool? _expanded2;
                                             child: InkWell(
                                               onTap: (){
                                                 //HEre
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => Container(
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) => SizedBox(
                                                   height: height,
                                                   width: width,
-                                                  child: Center(
+                                                  child: const Center(
                                                     child: Text('I am a container, if youre seeing this, meaning that it has worked'),
                                                   ),
                                                 )));
                                               },
                                               child: Row(
-                                                children: [
+                                                children: const [
                                                   Icon(Icons.person),
                                                   SizedBox(width: 40,),
                                                   Text('View Profile'),
@@ -205,7 +209,7 @@ bool? _expanded2;
                         content: Container(
                           width: double.infinity,
                           color: Colors.white,
-                          padding: EdgeInsets.only(left: 10, right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
 
                           child: Column(
                             children: [
@@ -220,14 +224,65 @@ bool? _expanded2;
                                 10,
                               ),
 
+                              //The column where the buttons will be
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   MyButton(onTap: (){
+                                    showDialog<void>(
+                                          context: context,
+                                          barrierDismissible:true,
+                                          // false = user must tap button, true = tap outside dialog
+                                          builder:
+                                              (BuildContext dialogContext) {
+
+                                            //The controller for editing the remarks
+                                            TextEditingController texed = TextEditingController(text: widget.remarks);
+                                            return AlertDialog(
+                                              title: const Text('Enter new Remarks'),
+                                              //We want to edit remarks, this is where its done
+                                              content: TextField(
+
+                                                autofocus: true,
+                                                controller: texed,
+                                                maxLines: null,
+                                                decoration: InputDecoration(
+                                                  counterText: '125'
+
+                                                ),
 
 
-                                  }, buttonText: 'Edit Remarks'),
+
+                                              ),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: Text('Submit',style:
+                                                    TextStyle(
+                                                      color: AppColors.splashColor
+                                                    ),),
+                                                  onPressed: () {
+                                                    updateRemarks(texed.text.trim());
+                                                    Navigator.of(dialogContext)
+                                                        .pop(); // Dis
+                                                    // miss alert dialog
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: const Text('Cancel',style:
+                                                  TextStyle(
+                                                      color: Colors.red
+                                                  ),),
+                                                  onPressed: () {
+                                                    Navigator.of(dialogContext)
+                                                        .pop(); // Dismiss alert dialog
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }, buttonText: 'Edit Remarks'),
 
                                 ],
                               )
@@ -240,7 +295,7 @@ bool? _expanded2;
             );
           }else if(snapshot.data == null){
 
-            return Container(
+            return SizedBox(
               height: height,
               width: width,
               child: Column(
@@ -248,10 +303,10 @@ bool? _expanded2;
                   
                   Shimmer(child:
 
-                  Container(width: width,
+                  SizedBox(width: width,
                   height: 300,)
                   ),
-                  Shimmer(child: Container(width: width,
+                  Shimmer(child: SizedBox(width: width,
                     height: 300,))
                 ],
               ),
@@ -273,5 +328,15 @@ bool? _expanded2;
           }
 
         });
+  }
+
+  Future updateRemarks(String remark) async{
+
+    await FirebaseFirestore.instance.collection('proposals').doc(widget.documentID).update(
+        {
+
+          'remarks': remark
+
+        }).whenComplete(() => Fluttertoast.showToast(msg: 'Successfully Updated'));
   }
 }

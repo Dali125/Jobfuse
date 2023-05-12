@@ -78,7 +78,7 @@ class _MyProfileState extends State<MyProfile> {
 
                                   FadeInDown(
                                     delay: const Duration(milliseconds: 200),
-                                    child: Text('Profile', style: TextStyle(
+                                    child: const Text('Profile', style: TextStyle(
                                       fontSize: 35
                                     ),),
                                   ),
@@ -141,23 +141,23 @@ class _MyProfileState extends State<MyProfile> {
                                     ),
                                   ),
 
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 24,
                                   ),
                                   FadeInUp(
-                                    delay:Duration(milliseconds: 300),
+                                    delay:const Duration(milliseconds: 300),
                                     child: Text('${data['First_name']}  ${data['Last_name']}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
 
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20
                                     ),),
                                   ),
                                   FadeInUp(
-                                  delay: Duration(milliseconds: 300),
+                                  delay: const Duration(milliseconds: 300),
                                       child: Text(data['UserName'])),
 
-                                  SizedBox(height: 30,),
+                                  const SizedBox(height: 30,),
 
                                   SizedBox(
                                     height: 40,
@@ -165,8 +165,8 @@ class _MyProfileState extends State<MyProfile> {
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         FadeInLeft(
-                                          delay: Duration(milliseconds: 450),
-                                          child: Text('About', style: TextStyle(
+                                          delay: const Duration(milliseconds: 450),
+                                          child: const Text('About', style: TextStyle(
                                             fontSize: 30,
                                             fontWeight: FontWeight.bold
                                           ),),
@@ -176,21 +176,18 @@ class _MyProfileState extends State<MyProfile> {
                                   ),
                                   FadeInLeft(child: const Divider()),
 
-                                SizedBox(
-
-                                  height: 30,
-
-                                  child: Row(
+                                  width < 600 ? Text(data['about'],
+                                    style: const TextStyle(fontSize: 20),):
+                                  Row(
 
                                     children: [
                                       FadeInLeft(
-                                        delay:Duration(milliseconds: 500),
+                                        delay:const Duration(milliseconds: 500),
                                         child: Text(data['about'],
-                                        style: TextStyle(fontSize: 20),),
+                                          style: const TextStyle(fontSize: 20),),
                                       )
                                     ],
                                   )
-                                )
 
 
 

@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:jobfuse/ui/colors/colors.dart';
 
+import '../selected_posts.dart';
+
 class SearchJobs extends StatefulWidget {
   const SearchJobs({Key? key}) : super(key: key);
 
@@ -106,6 +108,18 @@ class _SearchJobsState extends State<SearchJobs> {
                                     subtitle: Text(data['ExperienceLevel'].toString(), maxLines: 1,),
 
                                     onTap: (){
+                                      //We want to Navigate to the post that we have chosen,or selected in the search
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) =>
+
+                                          SelectedPost(
+                                              experienceLevel: data['ExperienceLevel'],
+                                              description: data['Description'],
+                                              title: data['title'],
+                                              budget: data['Budget'],
+                                              clientId: data['Client_id'],
+                                              duration: data['Duration'],
+                                              documentId : data['DocumentID']),  ));
+
 
 
                                     },

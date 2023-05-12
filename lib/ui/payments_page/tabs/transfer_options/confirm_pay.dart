@@ -106,8 +106,8 @@ class _SendMoneyState extends State<SendMoney> {
                           from: 100,
                           duration: const Duration(milliseconds: 1000),
                           child: Container(
-                            width: 130,
-                            height: 130,
+                            width: 128,
+                            height: 128,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: Colors.pink.shade50,
@@ -115,7 +115,7 @@ class _SendMoneyState extends State<SendMoney> {
                             ),
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(50),
-                                child: Image.asset(widget.avatar)),
+                                child: Image.network(widget.avatar)),
                           ),
                         ),
 
@@ -129,7 +129,7 @@ class _SendMoneyState extends State<SendMoney> {
                             from: 60,
                             delay: const Duration(milliseconds: 500),
                             duration: const Duration(milliseconds: 1000),
-                            child:  Text("Send Money To ${data['balance']}", style: TextStyle(color: Colors.grey),)),
+                            child:  Text("Send Money To ${widget.name}", style: TextStyle(color: Colors.grey),)),
                         const SizedBox(height: 10,),
 
                         //The name appears here
