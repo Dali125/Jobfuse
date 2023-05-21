@@ -44,7 +44,7 @@ class _PaymentsHomeState extends State<PaymentsHome> {
     PayMentHome(uid: FirebaseAuth.instance.currentUser!.uid.toString()),
 
     const Deposit(),
-    const Transfer(),
+    Transfer(),
     const Center(child: Text('4'),),
 
   ];

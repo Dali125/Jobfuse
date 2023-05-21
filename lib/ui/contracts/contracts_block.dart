@@ -12,7 +12,8 @@ class ExpandedContract extends StatefulWidget {
     required this.begindate,
     required this.experienceLevel,
     required this.contractDuration,
-    required this.Budget}) : super(key: key);
+    required this.Budget,
+    required this.projectOwnerName}) : super(key: key);
 
   //The info about the contract
   final contractInfo;
@@ -23,6 +24,7 @@ class ExpandedContract extends StatefulWidget {
   final String experienceLevel;
   final String contractDuration;
   final int Budget;
+  final String projectOwnerName;
 
   @override
   State<ExpandedContract> createState() => _ExpandedContractState();
@@ -67,7 +69,7 @@ class _ExpandedContractState extends State<ExpandedContract> {
               child: StreamBuilder(
 
                 stream: FirebaseFirestore.instance.collection('users').
-                  where('Userid', isEqualTo: widget.currentUser).snapshots(),
+                  where('Userid', isEqualTo: widget.otherUser).snapshots(),
                 builder: (context, snapshot) {
 
                   if(snapshot.hasData) {
@@ -103,9 +105,9 @@ class _ExpandedContractState extends State<ExpandedContract> {
 
                                         Text(
                                           '  This Freelance Service Contract is made and entered into as of ${widget
-                                              .begindate} by and between [Freelancer Name],'
-                                              ' located at [Freelancer Address], and ${username['First_name']} ${username['Last_name']},'
-                                              ' located at [Client Address].\n',
+                                              .begindate} by and between ${widget.projectOwnerName.toString()},'
+                                              ' with NRC NUMBER [Freelancer Address], and ${username['First_name']} ${username['Last_name']},'
+                                              ' with NRC NUMBER ${username['NRC_NUMBER']}.\n',
 
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -276,7 +278,7 @@ class _ExpandedContractState extends State<ExpandedContract> {
                                           ),
                                         ),
                                         const SizedBox(
-                                          height: 30,
+                                          height: 80,
                                         ),
 
 

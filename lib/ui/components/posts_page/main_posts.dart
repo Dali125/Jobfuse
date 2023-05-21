@@ -5,7 +5,7 @@ import 'package:jobfuse/ui/components/posts_page/posts.dart';
 import 'package:jobfuse/ui/components/posts_page/tabs/Search.dart';
 import 'package:jobfuse/ui/proposal_page/recieved_proposal.dart';
 import 'package:jobfuse/ui/proposal_page/submitted_proposals.dart';
-
+import 'initial_home.dart';
 import '../../bookmarks/mybookmarks.dart';
 import '../../drawer/my_drawer.dart';
 
@@ -28,48 +28,17 @@ class _JobsHomeState extends State<JobsHome> {
 
         appBar: AppBar(
 
-          backgroundColor: AppColors.logColor,
+          backgroundColor: Colors.white,
+          elevation: 0,
 
-          title: const DelayedDisplay(delay: Duration(milliseconds: 200)
-              ,child: Text('Jobs')),
+
           centerTitle: true,
-          bottom: const TabBar(
-
-            tabs: [
-              DelayedDisplay(delay: Duration(milliseconds: 200),
-                child: Tab(
-                  text: 'Feed',),
-              ),
-
-              DelayedDisplay(delay: Duration(milliseconds: 200),
-                child: Tab(
-                  text: 'Saved',),
-              ),
-              DelayedDisplay(
-                delay: Duration(milliseconds: 200), child: Tab(
-                text: 'Search',),
-              ),
-
-
-
-
-            ],
-          ),
 
 
 
         ),
-        body: const TabBarView(
-          children: [
+        body: InitialHome(),
 
-            MyHome(),
-
-            MyBookmarks(),
-
-            SearchJobs()
-
-          ],
-        ),
         drawer: const MyDrawer(),
 
       ),

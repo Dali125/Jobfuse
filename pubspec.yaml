@@ -80,7 +80,6 @@ dependencies:
   stylish_dialog: ^1.0.2
   flutterwave_standard: ^1.0.7
   uuid:
-  flutter_inappwebview:
   ade_flutterwave_working_version:
   http:
   flutter_paystack: ^1.0.7
@@ -89,6 +88,12 @@ dependencies:
   mockito: ^5.4.0
   flutter_slidable: 3.0.0
   flutter_rating_bar:
+  rating_dialog: ^2.0.4
+  ussd_service:
+  ussd_advanced:
+  webview_flutter:
+  im_stepper:
+
 
 
 

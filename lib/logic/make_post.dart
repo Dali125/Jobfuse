@@ -2,23 +2,26 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MakePost{
 
-int budget;
-String ExperienceLevel;
-String Description;
-String Duration;
+String budget;
+String experienceLevel;
+String description;
+String duration;
 String title;
-String Client_id;
+String clientID;
+String taskType;
+String category;
 
 
 
- MakePost({required this.budget, required this.Duration, required this.title, required this.Client_id, required this.Description, required this.ExperienceLevel});
+ MakePost({required this.budget, required this.duration, required this.title, required this.clientID, required this.description, required this.experienceLevel, required this.category, required this.taskType});
 
 
 
- Future UploadPost() async{
+ UploadPost() async{
 
    const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
    Random _rnd = Random();
@@ -36,16 +39,18 @@ String Client_id;
      await FirebaseFirestore.instance.collection('ProjectTasks').doc(newDocID).set({
 
        'Budget': budget,
-       'Client_id': Client_id,
+       'TaskType': taskType,
+       'Client_id': clientID,
        'title':title,
-       'Description':Description,
-       'Duration' : Duration,
-       'ExperienceLevel' : ExperienceLevel,
-       'DocumentID' : newDocID
+       'Description':description,
+       'Duration' : duration,
+       'ExperienceLevel' : experienceLevel,
+       'DocumentID' : newDocID,
+       'category': category
 
 
 
-     });
+     }).whenComplete(() => Fluttertoast.showToast(msg: 'msg'));
 
    }catch (e){
 

@@ -1,18 +1,11 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:delayed_display/delayed_display.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:jobfuse/ui/profile_page/update_profile_pic.dart';
-import 'package:page_transition/page_transition.dart';
-
 import 'package:shimmer_animation/shimmer_animation.dart';
-
-import '../../logic/models/login_model.dart';
 import '../colors/colors.dart';
-import '../components/login/login.dart';
-import '../personal_info_page/personal_info.dart';
+import '../ratings/main_ratings.dart';
+
 
 
 class StalkerView extends StatefulWidget {
@@ -80,7 +73,7 @@ class _StalkerViewState extends State<StalkerView> {
 
                                       FadeInDown(
                                         delay: const Duration(milliseconds: 200),
-                                        child: Text('Profile', style: TextStyle(
+                                        child: const Text('Profile', style: TextStyle(
                                             fontSize: 35
                                         ),),
                                       ),
@@ -116,23 +109,23 @@ class _StalkerViewState extends State<StalkerView> {
                                         ),
                                       ),
 
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 24,
                                       ),
                                       FadeInUp(
-                                        delay:Duration(milliseconds: 300),
+                                        delay:const Duration(milliseconds: 300),
                                         child: Text('${data['First_name']}  ${data['Last_name']}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
 
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20
                                           ),),
                                       ),
                                       FadeInUp(
-                                          delay: Duration(milliseconds: 300),
+                                          delay: const Duration(milliseconds: 300),
                                           child: Text(data['UserName'])),
 
-                                      SizedBox(height: 30,),
+                                      const SizedBox(height: 30,),
 
                                       SizedBox(
                                         height: 40,
@@ -140,8 +133,8 @@ class _StalkerViewState extends State<StalkerView> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
                                             FadeInLeft(
-                                              delay: Duration(milliseconds: 450),
-                                              child: Text(
+                                              delay: const Duration(milliseconds: 450),
+                                              child: const Text(
 
                                                 'About', style: TextStyle(
                                                   fontSize: 30,
@@ -154,33 +147,44 @@ class _StalkerViewState extends State<StalkerView> {
                                       ),
                                       FadeInLeft(child: const Divider()),
 
-                                      width < 600 ? Text(data['about'],
-                                        style: TextStyle(fontSize: 20),):
+                                      width < 600 ? FadeInUp(
+                                        delay: const Duration(milliseconds: 330),
+
+                                        child: Text(data['about'],
+                                          style: const TextStyle(fontSize: 20),),
+                                      ):
                                       Row(
 
                                         children: [
                                           FadeInLeft(
-                                            delay:Duration(milliseconds: 500),
+                                            delay:const Duration(milliseconds: 500),
                                             child: Text(data['about'],
-                                              style: TextStyle(fontSize: 20),),
+                                              style: const TextStyle(fontSize: 20),),
                                           )
                                         ],
                                       ),
-                                      Divider(),
+                                      const Divider(),
                                       FadeInLeft(
-                                        delay: Duration(milliseconds: 450),
+                                        delay: const Duration(milliseconds: 450),
                                         child: Row(
 
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                                           children: [
-                                            Text(
+                                            const Text(
 
                                               'Ratings and Reviews', style: TextStyle(
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold
                                             ),
                                               maxLines: 20,),
+
+                                           IconButton(onPressed: (){
+
+                                             Navigator.push(context, MaterialPageRoute(builder: (context) => Ratings(userID: widget.userId)));
+                                             //
+                                           }, icon:const Icon(Icons.arrow_forward))
                                           ],
-                                          mainAxisAlignment: MainAxisAlignment.start,
                                         ),
                                       )
 

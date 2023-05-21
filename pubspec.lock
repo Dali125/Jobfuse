@@ -543,7 +543,7 @@ packages:
     source: hosted
     version: "3.3.0"
   flutter_inappwebview:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_inappwebview
       sha256: f73505c792cf083d5566e1a94002311be497d984b5607f25be36d685cf6361cf
@@ -709,6 +709,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  im_stepper:
+    dependency: "direct main"
+    description:
+      name: im_stepper
+      sha256: "84ca411f7c4666cb8762a6dd6eec0353c96c67f674124614263875d0570ca634"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1+1"
   image:
     dependency: transitive
     description:
@@ -1101,6 +1109,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  rating_dialog:
+    dependency: "direct main"
+    description:
+      name: rating_dialog
+      sha256: "4856ba266c255081f05c57148345ea13f0d86c4049859d66e14c47e2ab1f90d3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.4"
   rive:
     dependency: "direct main"
     description:
@@ -1346,6 +1362,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  ussd_advanced:
+    dependency: "direct main"
+    description:
+      name: ussd_advanced
+      sha256: "37d36fd074f585e5a90409c413cc8eadd612beb11ec2c2cf5e7b2d41ccd3f958"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  ussd_service:
+    dependency: "direct main"
+    description:
+      name: ussd_service
+      sha256: "2eb389b5ac8efa33722939837ef342627d7846a6e1786cae3518f994645168d1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   uuid:
     dependency: "direct main"
     description:
@@ -1379,7 +1411,7 @@ packages:
     source: hosted
     version: "2.1.3+1"
   webview_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: webview_flutter
       sha256: "392c1d83b70fe2495de3ea2c84531268d5b8de2de3f01086a53334d8b6030a88"

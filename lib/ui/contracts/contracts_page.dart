@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:jobfuse/ui/colors/colors.dart';
 import 'package:jobfuse/ui/components/ui-rands/text_guides.dart';
 import 'package:jobfuse/ui/components/ui-rands/text_title.dart';
+import 'package:jobfuse/ui/payments_page/tabs/withdraw.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
@@ -85,6 +86,7 @@ class _ContractsPageState extends State<ContractsPage> {
                       //A list of both users, or all of the users in the contract
                       List otherUser = contractInfo['involvedParties'];
 
+                      String firstInArray = otherUser[0];
                       otherUser.remove(myUserID);
 
                       //The ID of the other user
@@ -95,8 +97,11 @@ class _ContractsPageState extends State<ContractsPage> {
                       return  Slidable(
 
 
+
+
                         key: const ValueKey(0),
                         startActionPane: ActionPane(
+                          extentRatio: 0.7,
 
                           motion: const ScrollMotion(),
                           // dismissible: DismissiblePane(onDismissed: (){}
@@ -142,7 +147,49 @@ class _ContractsPageState extends State<ContractsPage> {
                             },
                               backgroundColor: const Color(0xFFFE4a49),
                               icon: Icons.cancel_presentation_rounded,
-                              label: 'Terminate Contract',
+                              label: 'Terminate',
+                              flex: 2,
+                            ),
+                            SlidableAction(onPressed: (context){
+
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Payout'),
+                                    content: const Text('Proceed to payment?'),
+                                    actions: <Widget>[
+                                      TextButton(onPressed: ()async{
+
+
+
+
+
+                                        Navigator.of(context).pop();
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => Transfer()));
+
+                                      }, child: const Text('Yes', style: TextStyle(color: Colors.green),)),
+
+                                      TextButton(
+                                        onPressed: () {
+
+
+                                        },
+
+
+                                        child: const Text('No', style: TextStyle(color: Colors.red),),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+
+                            },
+                              backgroundColor: Colors.green,
+                              icon: Icons.monetization_on_outlined,
+                              label: 'Payout',
+                              flex: 2,
                             ),
 
 
@@ -163,7 +210,7 @@ class _ContractsPageState extends State<ContractsPage> {
                               },
                               //To kind of get the size of the container, which contains contract details
                               child: Container(
-                                height: width < 600 ? 120 : 200,
+                                height: width < 600 ? 180 : 300,
                                 width: width,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
@@ -217,90 +264,138 @@ class _ContractsPageState extends State<ContractsPage> {
 //*******************************************************************************************
 
 
-                                        return InkWell(
-                                          onTap: (){
+                                        return FutureBuilder(
+
+
+                                        future: FirebaseFirestore.instance.collection('users').
+                                            where('Userid',isEqualTo: firstInArray).get(),
+
+                                        builder: (context, snapshot){
+
+                                        if(snapshot.hasData){
 
 
 
-                                            //To view more Details about the Contract here
-                                           Navigator.push(context, PageTransition(
-                                                alignment: Alignment.center,
-                                                child: ExpandedContract(contractInfo: title,
-                                                  currentUser: myUserID,
-                                                  otherUser: otherUserString,
-                                                  status: status,
-                                                  begindate: formattedDateTime,
-                                                  experienceLevel: experienceLevel,
-                                                  contractDuration: contractDuration,
-                                                  Budget: Budget,
+                                          var contractUserdata = snapshot.data?.docs[0];
+
+                                          return InkWell(
+                                            onTap: (){
+
+
+
+                                              //To view more Details about the Contract here
+                                              Navigator.push(context, PageTransition(
+                                                  alignment: Alignment.center,
+                                                  child: ExpandedContract(contractInfo: title,
+                                                    currentUser: myUserID,
+                                                    otherUser: otherUserString,
+                                                    status: status,
+                                                    begindate: formattedDateTime,
+                                                    experienceLevel: experienceLevel,
+                                                    contractDuration: contractDuration,
+                                                    Budget: Budget, projectOwnerName: '${contractUserdata?['First_name']} ${contractUserdata?['Last_name']}',
 
 
 
 
-                                                ),
-                                                type: PageTransitionType.scale));
-                                          },
-                                          child: DelayedDisplay(
-                                            delay: const Duration(milliseconds: 200),
-                                            child:
-                                            //The Summary of the Contract
-                                            Padding(padding: const EdgeInsets.only(left: 10, right: 10, top: 10)
 
-                                                ,child: Row(
-
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                                children: [
-                                                  Column(
-
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-
-                                                      TextTitle(fontSize: 20, text: 'ProjectTitle ', padding: 1, fontWeight: FontWeight.bold,),
-                                                      Text(data['title']),
-                                                      SizedBox(height: 10,),
-
-                                                    ],
                                                   ),
+                                                  type: PageTransitionType.scale));
+                                            },
+                                            child: DelayedDisplay(
+                                              delay: const Duration(milliseconds: 200),
+                                              child:
+                                              //The Summary of the Contract
+                                              Padding(padding: const EdgeInsets.only(left: 10, right: 10, top: 10)
 
+                                                ,child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Row(
 
-
-
-
-                                                  Expanded(child: Container(
-                                                    width: width,
-
-                                                  )),
-
-                                                  SizedBox(height: 10,),
-                                                  Expanded(
-                                                    child: Column(
-                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                       crossAxisAlignment: CrossAxisAlignment.start,
 
                                                       children: [
+                                                        Column(
 
-                                                      TextTitle(fontSize: width < 600 ? 14 : 20, text: 'Project Status',
-                                                        padding: 1, fontWeight: FontWeight.bold,),
-                                                      Text(contractInfo['status'], style: TextStyle(fontSize: 10,
-                                                        color: contractInfo['status'] == 'ongoing' ? Colors.green : Colors.red
+                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+
+                                                            TextTitle(fontSize: 20, text: 'Project Owner ', padding: 1, fontWeight: FontWeight.bold,),
+                                                            Text('${contractUserdata?['First_name']} ${contractUserdata?['Last_name']}'),
+                                                            SizedBox(height: 10,),
+
+                                                          ],
+                                                        ),
 
 
-                                                      ),),
-
-                                                    ],),
-                                                  )
 
 
 
-                                                ],
+                                                        Expanded(child: Container(
+                                                          width: width,
+
+                                                        )),
+
+                                                        SizedBox(height: 10,),
+                                                        Expanded(
+                                                          child: Column(
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                                                            children: [
+
+                                                              TextTitle(fontSize: width < 600 ? 14 : 20, text: 'Project Status',
+                                                                padding: 1, fontWeight: FontWeight.bold,),
+                                                              Text(contractInfo['status'], style: TextStyle(fontSize: 10,
+                                                                  color: contractInfo['status'] == 'ongoing' ? Colors.green : Colors.red
+
+
+                                                              ),),
+
+                                                            ],),
+                                                        )
+
+
+
+                                                      ],
+                                                    ),
+
+
+                                                    TextTitle(fontSize: 20, text: 'ProjectTitle ', padding: 1, fontWeight: FontWeight.bold,),
+                                                            Text(data['title']),
+                                                            SizedBox(height: 10,),
+                                                  ],
+                                                ),
+
+
                                               ),
-
-
                                             ),
-                                          ),
-                                        );
+                                          );
+                                        }else if(snapshot.connectionState == ConnectionState.waiting){
+
+                                          return CircularProgressIndicator();
+
+
+                                        }else{
+
+                                          return Text('center');
+                                        }
+
+
+                                        });
+
+
+
+
+
+
+
+
+
+
 
 
                                       }else {

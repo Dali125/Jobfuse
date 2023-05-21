@@ -2,6 +2,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:jobfuse/ui/colors/colors.dart';
 import 'package:jobfuse/ui/components/posts_page/create_post.dart';
+
+import '../components/posts_page/create_step_post.dart';
 class MyFAB extends StatefulWidget {
   const MyFAB({Key? key}) : super(key: key);
 
@@ -32,21 +34,27 @@ class _MyFABState extends State<MyFAB> {
               const SizedBox(
                 height: 30,
               ),
-              FadeInUp(
-
-                delay: const Duration(milliseconds: 200),
-                child: ListTile(
-                  leading: const Icon(Icons.add,color: Colors.blue,),
-                  title: const Text('Create Post'),
-
-                  onTap:(){
-
-                    Navigator.of(context).push(_createRoute());
-                  },
-                ),
-              ),
+              // FadeInUp(
+              //
+              //   delay: const Duration(milliseconds: 200),
+              //   child: ListTile(
+              //     leading: const Icon(Icons.add,color: Colors.blue,),
+              //     title: const Text('Create Post'),
+              //
+              //     onTap:(){
+              //
+              //       Navigator.of(context).push(_createRoute());
+              //     },
+              //   ),
+              // ),
               ListTile(
                 title: Text('Dalitso'),
+
+                onTap: (){
+
+                  Navigator.of(context).push(_createStepRoute());
+
+                },
               ),
               ListTile(
                 title: Text('Dalitso'),
@@ -66,9 +74,25 @@ class _MyFABState extends State<MyFAB> {
   }
 }
 
-Route _createRoute() {
+// Route _createRoute() {
+//   return PageRouteBuilder(
+//     pageBuilder: (context, animation, secondaryAnimation) => CreatePost(),
+//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//       const begin = Offset(0.0, 1.0);
+//       const end = Offset.zero;
+//       const curve = Curves.elasticOut;
+//       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+//       final offsetAnimation = animation.drive(tween);
+//       return SlideTransition(position: offsetAnimation,child: child,);
+//     },
+//   );
+//
+//
+// }
+
+Route _createStepRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => CreatePost(),
+    pageBuilder: (context, animation, secondaryAnimation) => StepPost(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -77,6 +101,5 @@ Route _createRoute() {
       final offsetAnimation = animation.drive(tween);
       return SlideTransition(position: offsetAnimation,child: child,);
     },
-  );
-}
+  );}
 

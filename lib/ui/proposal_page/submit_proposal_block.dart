@@ -10,6 +10,7 @@ import 'dart:math' as math;
 
 import '../colors/colors.dart';
 import '../components/ui-rands/my_button.dart';
+import '../profile_page/stalker_profile_view.dart';
 
 class SubmittedProposalBlock extends StatefulWidget {
 
@@ -132,8 +133,8 @@ bool? _expanded2;
                                       color: Colors.transparent,
 
                                       child: Ink.image(
-                                        height: 60,
-                                        width: 60,
+                                        height: 50,
+                                        width: 50,
                                         fit: BoxFit.cover,
                                         image: NetworkImage(userData!['imageUrl']),
                                         child: InkWell(
@@ -164,13 +165,9 @@ bool? _expanded2;
                                             child: InkWell(
                                               onTap: (){
                                                 //HEre
-                                                Navigator.push(context, MaterialPageRoute(builder: (context) => SizedBox(
-                                                  height: height,
-                                                  width: width,
-                                                  child: const Center(
-                                                    child: Text('I am a container, if youre seeing this, meaning that it has worked'),
-                                                  ),
-                                                )));
+                                                Navigator.push(context, MaterialPageRoute(builder: (context) =>
+
+                                                    StalkerView(userId: widget.freelanceID)));
                                               },
                                               child: Row(
                                                 children: const [

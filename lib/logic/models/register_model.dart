@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 String client = 'client';
 String freelancer = 'freelancer';
@@ -16,9 +17,10 @@ class RegisterModel {
   String userName;
   final imageUrl;
   final about;
+  final List<String> interests;
 
 
-  RegisterModel(this.imageUrl, this.about, {required this.email, required this.password, required this.fname, required this.lname, required this.nrcc, required this.number, required this.userName});
+  RegisterModel(this.imageUrl, this.about, this.interests, {required this.email, required this.password, required this.fname, required this.lname, required this.nrcc, required this.number, required this.userName});
 
   Future registerUser() async {
 
@@ -28,7 +30,7 @@ class RegisterModel {
       await Future.delayed(Duration(seconds: 4));
       FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
-      storeUserDetails(fname, lname, nrcc, number, userName,imageUrl, about);
+      storeUserDetails(fname, lname, nrcc, number, userName,imageUrl, about, interests);
       createWallet();
     }on FirebaseAuthException catch(e){
       if (kDebugMode) {
@@ -39,7 +41,7 @@ class RegisterModel {
     }
   }
 
-  storeUserDetails(String firstname, String lastname, String nrc, int phoneNumber, String username, String imageUrl,String about){
+  storeUserDetails(String firstname, String lastname, String nrc, int phoneNumber, String username, String imageUrl,String about, List<String> interests){
 
 
     try{
@@ -56,8 +58,9 @@ class RegisterModel {
         'imageUrl': imageUrl,
         'about': about,
         'email': FirebaseAuth.instance.currentUser!.email.toString(),
+        'interests':interests
 
-      });
+      }).whenComplete(() => Fluttertoast.showToast(msg: 'Registration Successful'));
 
 
     } catch (e){

@@ -23,7 +23,7 @@ class SelectedPost extends StatefulWidget {
   String clientId;
   String description;
   String title;
-  int budget;
+  String budget;
   String duration;
   String documentId;
   SelectedPost({Key? key,required this.experienceLevel, required this.description, required this.title

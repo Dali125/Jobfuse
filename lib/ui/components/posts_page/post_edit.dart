@@ -22,7 +22,7 @@ class PostEdit extends StatelessWidget {
    String clientId;
    String description;
   String title;
-  int budget;
+  String budget;
    String duration;
    String projectID;
 
