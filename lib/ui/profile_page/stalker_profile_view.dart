@@ -1,23 +1,3 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:shimmer_animation/shimmer_animation.dart';
-import '../colors/colors.dart';
-import '../ratings/main_ratings.dart';
-import 'Services/stalker_services.dart';
-
-
-
-class StalkerView extends StatefulWidget {
-
-  final userId;
-  const StalkerView({Key? key, required this.userId}) : super(key: key);
-
-  @override
-  State<StalkerView> createState() => _StalkerViewState();
-}
-
 class _StalkerViewState extends State<StalkerView> {
   String usernameFromDb = FirebaseAuth.instance.currentUser!.email.toString();
   String myuid = FirebaseAuth.instance.currentUser!.uid;
@@ -129,11 +109,11 @@ class _StalkerViewState extends State<StalkerView> {
                     length: 3, // Number of tabs
                     child: Column(
                       children: [
-                        const TabBar(
+                        TabBar(
                           tabs: [
-                            Tab(text: 'About'),
-                            Tab(text: 'Services'),
-                            Tab(text: 'Reviews'),
+                            Tab(text: 'Tab 1'),
+                            Tab(text: 'Tab 2'),
+                            Tab(text: 'Tab 3'),
                           ],
                         ),
                         SizedBox(
@@ -142,8 +122,8 @@ class _StalkerViewState extends State<StalkerView> {
                           child: TabBarView(
                             children: [
                               Text('Tab 1 Content'),
-                              StalkerServices(),
-                              Ratings()
+                              Text('Tab 2 Content'),
+                              Text('Tab 3 Content'),
                             ],
                           ),
                         ),
@@ -166,4 +146,3 @@ class _StalkerViewState extends State<StalkerView> {
     );
   }
 }
-
