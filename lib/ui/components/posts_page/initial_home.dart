@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:jobfuse/constant_widget/popular_services%20card.dart';
 import 'package:jobfuse/ui/components/posts_page/recommended_posts.dart';
+import 'package:jobfuse/ui/components/posts_page/services/servicesTab.dart';
 import 'package:jobfuse/ui/components/posts_page/tabs/Search.dart';
+import 'package:shimmer_animation/shimmer_animation.dart';
 
 import '../../../constant_widget/card.dart';
 import '../../colors/colors.dart';
@@ -95,6 +97,7 @@ class _InitialHomeState extends State<InitialHome> {
 
                                         print(services['image']);
                                         print(services['category']);
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => SelecteServices(category: services['category'])));
                                       },),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -111,7 +114,22 @@ class _InitialHomeState extends State<InitialHome> {
                         } else if (snapshot.hasError) {
                           return Icon(Icons.error_outline);
                         } else {
-                          return CircularProgressIndicator();
+                          return SizedBox(
+                            height: 220,
+                            width: width,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                                itemCount: 4,
+                                itemBuilder: (context , index){
+                                  return Shimmer(
+                                      color: Colors.white12,
+                                      child: Container(
+                                    height: 220,
+                                    width: 220,
+
+                                  ));
+                                })
+                          );
                         }
                       })),
               

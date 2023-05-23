@@ -22,17 +22,20 @@ class MyCard extends StatelessWidget {
           children: [
 
 
-            Image.network('https://firebasestorage.googleapis.com/v0/b/detail-crud.appspot.com/o/popular_services%2Fexplore.jpeg?alt=media&token=acd16f5a-8e44-4554-9c1e-b1bbee3a4f19',width: width,
-            fit: BoxFit.fitWidth,
-            ),
+            FadeInImage.assetNetwork(placeholder: 'assets/lottie/explore.jpeg',
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(child: Text(
+                image: 'https://firebasestorage.googleapis.com/v0/b/detail-crud.appspot.com/o/popular_services%2Fexplore.jpeg?alt=media&token=acd16f5a-8e44-4554-9c1e-b1bbee3a4f19',fit: BoxFit.fitWidth,width: width,)
 
-                  'Explore Potential Jobs',
-              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25)),
-              alignment: Alignment.bottomLeft,),
+
+
+            ,
+
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Align(alignment: Alignment.bottomLeft,child: Text(
+
+                  'Explore Potential Jobs, picked for you',
+              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 25)),),
             )
           ],
         )

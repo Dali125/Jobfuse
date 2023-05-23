@@ -23,7 +23,6 @@ class _RatingsState extends State<Ratings> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(title: Text('Ratings and Reviews'),),
 
       body: Container(
         height: height,
